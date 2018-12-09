@@ -5,21 +5,21 @@ from sqlalchemy import Column, String
 from .entity import Entity, Base, AppearanceBase
 
 
-class Head(Entity, Base):
-    __tablename__ = 'heads'
+class OutlineColor(Entity, Base):
+    __tablename__ = 'outline_color'
 
-    name = Column(String)
+    color = Column(String)
     image_url = Column(String)
 
-    def __init__(self, name, image_url, created_by):
+    def __init__(self, color, image_url, created_by):
         Entity.__init__(self, created_by)
-        self.name = name
+        self.color = color
         self.image_url = image_url
 
 
-class HeadSchema(Schema, AppearanceBase):
+class OutlineColorSchema(Schema, AppearanceBase):
     id = fields.Number()
-    name = fields.Str()
+    color = fields.Str()
     image_url = fields.Str()
     created_at = fields.DateTime()
     updated_at = fields.DateTime()

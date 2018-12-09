@@ -5,8 +5,8 @@ from sqlalchemy import Column, String
 from .entity import Entity, Base, AppearanceBase
 
 
-class Head(Entity, Base):
-    __tablename__ = 'heads'
+class Background(Entity, Base):
+    __tablename__ = 'backgrounds'
 
     name = Column(String)
     image_url = Column(String)
@@ -17,7 +17,7 @@ class Head(Entity, Base):
         self.image_url = image_url
 
 
-class HeadSchema(Schema, AppearanceBase):
+class BackgroundSchema(Schema, AppearanceBase):
     id = fields.Number()
     name = fields.Str()
     image_url = fields.Str()
@@ -29,7 +29,6 @@ class HeadSchema(Schema, AppearanceBase):
     def convert_image_base64(self, data, many):
         if many:
             self.convert_many_base64(data)
-
         else:
             self.convert_one_base64(data)
 

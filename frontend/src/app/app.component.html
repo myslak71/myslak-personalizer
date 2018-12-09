@@ -1,15 +1,30 @@
+Ten kolor to: {{outlineColor.color}} da dam
 <div style="text-align:center">
 </div>
-<div class="row" style="position:relative; left:0; top:0;">
-  Obrazek
-  <img src="data:image/png;base64,{{headsList[1].image_url}}" style="position:absolute; top:0; left:0;">
-  <img src="data:image/png;base64,{{headsList[0].image_url}}" style="position:absolute; top:0; left:0;">
+<div class="row" style="border-style: groove;border-color: coral;border-width: 7px;">
+  <div class="col-sm-8" style="border-style: groove;
+    border-color: coral;
+    border-width: 7px;">Obrazek
+    <!--<img src="data:image/png;base64,{{backgroundsList[0].image_url}}" style="position:absolute; top:0; left:0;">-->
+    <!--<img src="data:image/png;base64,{{headsList[1].image_url}}" style="position:absolute; top:0; left:0;">-->
+    <!--<img src="data:image/png;base64,{{clothesList[0].image_url}}" style="position:absolute; top:0; left:0;">-->
+    <!--<img src="data:image/png;base64,{{headsList[0].image_url}}" style="position:absolute; top:0; left:0;">-->
+  </div>
+  <div class="col" style="border-style: groove;
+    border-color: coral;
+    border-width: 7px;">
 
-  <div class="col"></div>
-  <div class="col">A tu formularze</div>
+    <label for="outlineColor">
+      Outline color:
+      <input class="form-control" type="color" [(ngModel)]="outlineColor.color" id="outlineColor" name="outlineColor"
+             (change)="onChangeOutlineColor(outlineColor.value)">
+    </label>
+    <label for="fillingColor">
+      Filling color:
+      <input class="form-control" type="color" id="fillingColor" name="fillingColor">
+    </label>
+
+  </div>
 </div>
-<ul>
-  <li *ngFor="let myslak of myslaksList">
-    {{myslak.title}}
-  </li>
-</ul>
+
+Ten kolor to: {{outlineColor.color}} da dam
