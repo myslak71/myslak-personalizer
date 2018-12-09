@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
-import {ExamsApiService} from './exams/exams-api.service';
+import {MyslaksApiService} from './myslaks/myslaks-api.service';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,7 @@ import {ExamsApiService} from './exams/exams-api.service';
     BrowserModule,
     HttpClientModule,
   ],
-  providers: [ExamsApiService],
+  providers: [MyslaksApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
