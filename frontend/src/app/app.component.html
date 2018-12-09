@@ -1,15 +1,15 @@
 <div style="text-align:center">
-  <h1>Exams</h1>
 </div>
-<div class="row">
-    <div class="col">Tu obrazek</div>
-    <div class="col">A tu formularze</div>
-  </div>
-<h2>Here are the myslaks created so far: </h2>
+<div class="row" style="position:relative; left:0; top:0;">
+  Obrazek
+  <img src="data:image/png;base64,{{headsList[1].image_url}}" style="position:absolute; top:0; left:0;">
+  <img src="data:image/png;base64,{{headsList[0].image_url}}" style="position:absolute; top:0; left:0;">
+
+  <div class="col"></div>
+  <div class="col">A tu formularze</div>
+</div>
 <ul>
   <li *ngFor="let myslak of myslaksList">
     {{myslak.title}}
-    {{myslak.background_url}}
-
   </li>
 </ul>

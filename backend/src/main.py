@@ -69,14 +69,9 @@ def get_backgrounds():
     session = Session()
     head_objects = session.query(Head).all()
 
-    file = open("static/elo.txt", 'r')
-    print('siema')
-    print(file.read())
-    print(HEAD_PATH)
-    file.close()
     # transforming into JSON-serializable objects
     schema = HeadSchema(many=True)
-    heads = schema.dump(head_osbjects)
+    heads = schema.dump(head_objects)
 
     # serializing as JSON
     session.close()
@@ -87,7 +82,7 @@ def get_head(head_id):
     session = Session()
     head_object = session.query(Head).get(head_id)
 
-    file = open("static/elo.txt", 'r')
+    file = open(f"{HEAD_PATH}/indian.png", 'r')
     print(head_object)
     file.close()
     # transforming into JSON-serializable objects
