@@ -22,7 +22,7 @@ export class OutlineColorApiService {
 
 
   updateOutlineColor(outlineColor: OutlineColor): Observable<any> {
-    return this.http.post(`${API_URL}/outline_color`, outlineColor, httpOptions)
+    return this.http.post(`${API_URL}/outline_color`, { color: "asd", image_url: "asd" }, httpOptions)
   }
 
 

@@ -19,7 +19,7 @@ import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Wonderful Myslak World';
 
-  outlineColor : OutlineColor;
+  outlineColor: OutlineColor;
 
   myslaksListSubs: Subscription;
   myslaksList: Myslak[];
@@ -88,8 +88,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.clothesListSubs.unsubscribe()
   }
 
-  onChangeOutlineColor() {
-    this.outlineColorApi.updateOutlineColor(this.outlineColor)
-    console.log(this.outlineColor.color)
+  onClickOutlineColor() {
+    console.log(this.outlineColor)
+    this.outlineColorApi.updateOutlineColor(this.outlineColor).subscribe()
   }
 }

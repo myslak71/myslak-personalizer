@@ -16,6 +16,14 @@ CORS(app)
 # if needed, generate database schema
 Base.metadata.create_all(engine)
 
+# ignores OPTIONS method
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
+
 
 @app.route('/myslaks')
 def get_myslaks():
@@ -152,19 +160,11 @@ def get_cloth(cloth_id):
     return jsonify(cloth.data)
 
 
-@app.route('/outline_color', methods=['POST'])
+@app.route('/outline_color', methods=['POST', 'GET', ''])
 def get_outline_color():
-    posted_outline_color = OutlineColorSchema(only=('color')).load(request.get_json())
-    session = Session()
-    outline_color_object = session.query(Cloth).get(cloth_id)
-
-    # transforming into JSON-serializable objects
-    schema = ClothSchema()
-    cloth = schema.dump(cloth_object)
-
-    # serializing as JSON
-    session.close()
-    return jsonify(cloth.data)
+    posted_outline_color = OutlineColorSchema().load(request.get_json())
+    print("siema", posted_outline_color, "elo")
+    return jsonify(posted_outline_color)
 
 # @app.route('/myslaks', methods=['POST'])
 # def add_myslak():
