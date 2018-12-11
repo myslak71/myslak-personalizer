@@ -8,13 +8,17 @@ from .entities.background import Background, BackgroundSchema
 from .entities.cloth import Cloth, ClothSchema
 from .entities.outline_color import OutlineColor, OutlineColorSchema
 
+from ..utils.replace_black_color import replace_black_color
+from PIL import Image
+
 # creating the Flask application
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 CORS(app)
 
 # if needed, generate database schema
 Base.metadata.create_all(engine)
+
 
 # ignores OPTIONS method
 @app.after_request
@@ -160,24 +164,24 @@ def get_cloth(cloth_id):
     return jsonify(cloth.data)
 
 
-@app.route('/outline_color', methods=['POST', 'GET', ''])
+@app.route('/outline_color', methods=['POST'])
 def get_outline_color():
-    posted_outline_color = OutlineColorSchema().load(request.get_json())
-    print("siema", posted_outline_color, "elo")
-    return jsonify(posted_outline_color)
+    new_color = request.get_json().get('color')
+    black_outline = Image.open('./static/img/outline.png')
 
-# @app.route('/myslaks', methods=['POST'])
-# def add_myslak():
-#     # mount exam object
-#     posted_myslak = MyslakSchema(only=('title', 'description', 'background_url')).load(request.get_json())
-#     myslak = Myslak(**posted_myslak.data, created_by="HTTP post request")
-#
-#     # persist exam
-#     session = Session()
-#     session.add(myslak)
-#     session.commit()
-#
-#     # return created exam
-#     new_myslak = MyslakSchema().dump(myslak).data
-#     session.close()
-#     return jsonify(new_myslak), 201
+    # TODO gotta fix that, move it to class
+    from base64 import b64encode
+    from io import BytesIO
+    buff = BytesIO()
+
+
+    new_outline_image = replace_black_color(black_outline, new_color)
+    new_outline_image.save('./static/outline.png', format="PNG")
+
+    with open(f'./static/outline.png', 'rb') as image:
+        new_outline_b64 = b64encode(image.read())
+    # new_outline_b64 = b64encode(buff.getvalue())
+    new = OutlineColor(new_color, new_outline_b64, "kibel")
+    schema = OutlineColorSchema()
+    cos = schema.dump(new)
+    return jsonify(cos.data)

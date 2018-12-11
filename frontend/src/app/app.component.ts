@@ -78,18 +78,25 @@ export class AppComponent implements OnInit, OnDestroy {
       );
 
     this.outlineColor = new OutlineColor('', '')
-
-  }
+  };
 
   ngOnDestroy() {
     this.myslaksListSubs.unsubscribe();
     this.headsListSubs.unsubscribe();
     this.backgroundsListSubs.unsubscribe();
     this.clothesListSubs.unsubscribe()
-  }
+  };
 
   onClickOutlineColor() {
-    console.log(this.outlineColor)
-    this.outlineColorApi.updateOutlineColor(this.outlineColor).subscribe()
+    console.log('siema')
+    this.outlineColorApi.updateOutlineColor(this.outlineColor)
+      .subscribe(res => {
+        this.outlineColor = res;
+        console.log('sraka', res, 'sraka')
+      }, err => {
+        console.log(err)
+      })
   }
+
+
 }
