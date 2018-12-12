@@ -1,3 +1,5 @@
+from base64 import b64encode
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -7,8 +9,9 @@ from .entities.head import Head, HeadSchema
 from .entities.background import Background, BackgroundSchema
 from .entities.cloth import Cloth, ClothSchema
 from .entities.outline_color import OutlineColor, OutlineColorSchema
+from .entities.filling_color import FillingColor, FillingColorSchema
 
-from ..utils.replace_black_color import replace_black_color
+from ..utils.replace_black_color import replace_black_color, cv, np
 from PIL import Image
 
 # creating the Flask application
@@ -165,23 +168,66 @@ def get_cloth(cloth_id):
 
 
 @app.route('/outline_color', methods=['POST'])
-def get_outline_color():
+def update_outline_color():
     new_color = request.get_json().get('color')
-    black_outline = Image.open('./static/img/outline.png')
+    black_outline = cv.imread('./static/img/outline.png', cv.IMREAD_UNCHANGED)
 
-    # TODO gotta fix that, move it to class
     from base64 import b64encode
-    from io import BytesIO
-    buff = BytesIO()
-
+    # TODO gotta fix that, move it to the class
 
     new_outline_image = replace_black_color(black_outline, new_color)
-    new_outline_image.save('./static/outline.png', format="PNG")
+    cv.imwrite('./static/img/output.png', new_outline_image, [cv.IMWRITE_PNG_COMPRESSION, 9])
 
-    with open(f'./static/outline.png', 'rb') as image:
+    with open(f'./static/img/output.png', 'rb') as image:
         new_outline_b64 = b64encode(image.read())
-    # new_outline_b64 = b64encode(buff.getvalue())
     new = OutlineColor(new_color, new_outline_b64, "kibel")
     schema = OutlineColorSchema()
+    cos = schema.dump(new)
+    return jsonify(cos.data)
+
+
+@app.route('/outline_color', methods=['GET'])
+def get_outline_color():
+    with open(f'./static/img/outline.png', 'rb') as image:
+        new_outline_b64 = b64encode(image.read())
+    new = OutlineColor('#000000', new_outline_b64, "kibel")
+    schema = OutlineColorSchema()
+    cos = schema.dump(new)
+    return jsonify(cos.data)
+
+@app.route('/filling_color', methods=['POST'])
+def update_filling_color():
+    new_color = request.get_json().get('color')
+    black_filling = cv.imread('./static/img/filling.png', cv.IMREAD_UNCHANGED)
+
+    from base64 import b64encode
+    # TODO gotta fix that, move it to the class
+
+    new_filling_image = replace_black_color(black_filling, new_color)
+    cv.imwrite('./static/img/filling_output.png', new_filling_image, [cv.IMWRITE_PNG_COMPRESSION, 9])
+
+    with open(f'./static/img/filling_output.png', 'rb') as image:
+        new_outline_b64 = b64encode(image.read())
+    new = FillingColor(new_color, new_outline_b64, "kibel")
+    schema = FillingColorSchema()
+    cos = schema.dump(new)
+    return jsonify(cos.data)
+
+
+@app.route('/filling_color', methods=['GET'])
+def get_filling_color():
+    new_color = "#F0F034"
+    black_filling = cv.imread('./static/img/filling.png', cv.IMREAD_UNCHANGED)
+
+    from base64 import b64encode
+    # TODO gotta fix that, move it to the class
+
+    new_filling_image = replace_black_color(black_filling, new_color)
+    cv.imwrite('./static/img/filling_output.png', new_filling_image, [cv.IMWRITE_PNG_COMPRESSION, 9])
+
+    with open(f'./static/img/filling_output.png', 'rb') as image:
+        new_outline_b64 = b64encode(image.read())
+    new = FillingColor(new_color, new_outline_b64, "kibel")
+    schema = FillingColorSchema()
     cos = schema.dump(new)
     return jsonify(cos.data)

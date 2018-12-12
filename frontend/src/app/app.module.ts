@@ -9,6 +9,7 @@ import {HeadsApiService} from "./myslaks/heads-api.service";
 import {BackgroundsApiService} from "./myslaks/backgrounds-api.service";
 import {ClothesApiService} from "./myslaks/clothes-api.service";
 import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
+import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
     HeadsApiService,
     BackgroundsApiService,
     ClothesApiService,
-    OutlineColorApiService
+    OutlineColorApiService,
+    FillingColorApiService
   ],
   bootstrap: [AppComponent]
 })

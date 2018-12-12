@@ -10,7 +10,7 @@ const httpOptions = {
 };
 
 @Injectable()
-export class OutlineColorApiService {
+export class FillingColorApiService {
 
   constructor(private http: HttpClient) {
   };
@@ -21,12 +21,12 @@ export class OutlineColorApiService {
 
 
 
-  updateOutlineColor(outlineColor) : Observable<any>{
-    return this.http.post(`${API_URL}/outline_color`, outlineColor, httpOptions)
+  updateFillingColor(fillingColor) : Observable<any>{
+    return this.http.post(`${API_URL}/filling_color`, fillingColor, httpOptions)
   }
 
-   getOutlineColor(): Observable<any> {
-    return this.http.get(`${API_URL}/outline_color`).catch(OutlineColorApiService._handleError);
+   getFillingColor(): Observable<any> {
+    return this.http.get(`${API_URL}/filling_color`).catch(FillingColorApiService._handleError);
   }
 
 }

@@ -5,8 +5,8 @@ from sqlalchemy import Column, String
 from .entity import Entity, Base, AppearanceBase
 
 
-class OutlineColor(Entity, Base):
-    __tablename__ = 'outline_color'
+class FillingColor(Entity, Base):
+    __tablename__ = 'filling_color'
 
     color = Column(String)
     image_url = Column(String)
@@ -17,7 +17,7 @@ class OutlineColor(Entity, Base):
         self.image_url = image_url
 
 
-class OutlineColorSchema(Schema, AppearanceBase):
+class FillingColorSchema(Schema, AppearanceBase):
     id = fields.Number()
     color = fields.Str()
     image_url = fields.Str()

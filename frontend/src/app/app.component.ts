@@ -10,6 +10,8 @@ import {Cloth} from "./myslaks/cloth.model";
 import {ClothesApiService} from "./myslaks/clothes-api.service";
 import {OutlineColor} from "./myslaks/outlineColor.model";
 import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
+import {FillingColor} from "./myslaks/fillingColor.model";
+import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,10 @@ import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Wonderful Myslak World';
 
+  fillingColorSubs: Subscription;
+  fillingColor: FillingColor;
+
+  outlineColorSubs: Subscription;
   outlineColor: OutlineColor;
 
   myslaksListSubs: Subscription;
@@ -40,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private backgroundsApi: BackgroundsApiService,
     private clothesApi: ClothesApiService,
     private outlineColorApi: OutlineColorApiService,
+    private fillingColorApi: FillingColorApiService
   ) {
   }
 
@@ -73,26 +80,51 @@ export class AppComponent implements OnInit, OnDestroy {
       .getClothes()
       .subscribe(res => {
           this.clothesList = res;
+          console.log('elo')
         },
         console.error
       );
 
-    this.outlineColor = new OutlineColor('', '')
+    console.log('kolor to', this.outlineColor)
+    this.outlineColorSubs = this.outlineColorApi
+      .getOutlineColor()
+      .subscribe(res => {
+          this.outlineColor = res
+        },
+        console.error)
+
+    this.fillingColorSubs = this.fillingColorApi
+      .getFillingColor()
+      .subscribe(res => {
+          this.fillingColor = res
+        },
+        console.error)
   };
 
   ngOnDestroy() {
     this.myslaksListSubs.unsubscribe();
     this.headsListSubs.unsubscribe();
     this.backgroundsListSubs.unsubscribe();
-    this.clothesListSubs.unsubscribe()
+    this.clothesListSubs.unsubscribe();
+    this.outlineColorSubs.unsubscribe();
+    this.fillingColorSubs.unsubscribe();
   };
 
   onClickOutlineColor() {
-    console.log('siema')
     this.outlineColorApi.updateOutlineColor(this.outlineColor)
       .subscribe(res => {
         this.outlineColor = res;
-        console.log('sraka', res, 'sraka')
+      }, err => {
+        console.log(err)
+      })
+  }
+
+  onClickFillingColor() {
+    console.log('weszlem!')
+    this.fillingColorApi.updateFillingColor(this.fillingColor)
+      .subscribe(res => {
+        console.log('weszlem2!', res)
+        this.fillingColor = res;
       }, err => {
         console.log(err)
       })
