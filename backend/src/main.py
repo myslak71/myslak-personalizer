@@ -12,7 +12,6 @@ from .entities.outline_color import OutlineColor, OutlineColorSchema
 from .entities.filling_color import FillingColor, FillingColorSchema
 
 from ..utils.replace_black_color import replace_black_color, cv, np
-from PIL import Image
 
 # creating the Flask application
 

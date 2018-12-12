@@ -32,13 +32,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   headsListSubs: Subscription;
   headsList: Head[];
+  currentHead = 0;
 
   backgroundsListSubs: Subscription;
   backgroundsList: Background[];
+  currentBackground = 0;
 
   clothesListSubs: Subscription;
   clothesList: Cloth[];
-
+  currentCloth = 0
 
   constructor(
     private myslaksApi: MyslaksApiService,
@@ -131,4 +133,39 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
+  OnClickNextBackground() {
+    if (this.currentBackground != this.backgroundsList.length - 1) {
+      this.currentBackground++
+    }
+  }
+
+  OnClickPreviousBackground() {
+    if (this.currentBackground != 0) {
+      this.currentBackground--
+    }
+  }
+
+  OnClickNextHead() {
+    if (this.currentHead != this.headsList.length - 1) {
+      this.currentHead++
+    }
+  }
+
+  OnClickPreviousHead() {
+    if (this.currentHead != 0) {
+      this.currentHead--
+    }
+  }
+
+  OnClickNextCloth() {
+    if (this.currentCloth != this.clothesList.length - 1) {
+      this.currentCloth++
+    }
+  }
+
+  OnClickPreviousCloth() {
+    if (this.currentCloth != 0) {
+      this.currentCloth--
+    }
+  }
 }

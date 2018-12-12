@@ -1,22 +1,19 @@
-Ten kolor to: {{outlineColor.color}} da dam
-<div style="text-align:center">
-</div>
 <div class="row" style="border-style: groove;border-color: coral;border-width: 7px;">
-  <div class="col-sm-8" style="border-style: groove;
+  <div class="col-sm-4" style="border-style: groove;
     border-color: coral;
     border-width: 7px;">Obrazek
-    <img src="data:image/png;base64,{{backgroundsList[0].image_url}}" style="position:absolute; top:0; left:0;">
-    <!--<img src="data:image/png;base64,{{headsList[1].image_url}}" style="position:absolute; top:0; left:0;">-->
-    <!--<img src="data:image/png;base64,{{headsList[2].image_url}}" style="position:absolute; top:0; left:0;">-->
+    <img src="data:image/png;base64,{{backgroundsList[currentBackground].image_url}}"
+         style="position:absolute; top:0; left:0; width: 100%;">
     <img class="e2e-trusted-url" src="data:image/png;base64,{{outlineColor.image_url}}"
-         style="position:absolute; top:0; left:0;">
-
+         style="position:absolute; top:0; left:0;width: 100%;">
     <img class="e2e-trusted-url" src="data:image/png;base64,{{fillingColor.image_url}}"
-         style="position:absolute; top:0; left:0;">
+         style="position:absolute; top:0; left:0;width: 100%;">
+    <img src="data:image/png;base64,{{clothesList[currentCloth].image_url}}"
+         style="position:absolute; top:0; left:0;width: 100%;">
 
-    <!--<img src="data:image/png;base64,{{outlineColor.image_url}}" style="position:absolute; top:0; left:0;">-->
-    <img src="data:image/png;base64,{{clothesList[0].image_url}}" style="position:absolute; top:0; left:0;">
-    <!--<img src="data:image/png;base64,{{headsList[3].image_url}}" style="position:absolute; top:0; left:0;">-->
+    <img src="data:image/png;base64,{{headsList[currentHead].image_url}}"
+         style="position:absolute; top:0; left:0;width: 100%;">
+
   </div>
   <div class="col" style="border-style: groove;
     border-color: coral;
@@ -35,8 +32,26 @@ Ten kolor to: {{outlineColor.color}} da dam
     <button (click)="onClickFillingColor()">
       change
     </button>
+    <button (click)="OnClickPreviousHead()">
+      previous
+    </button>
+    <button (click)="OnClickNextHead()">
+      next
+    </button>
+
+    <button (click)="OnClickPreviousBackground()">
+      previous
+    </button>
+    <button (click)="OnClickNextBackground()">
+      next
+    </button>
+
+    <button (click)="OnClickPreviousCloth()">
+      previous
+    </button>
+    <button (click)="OnClickNextCloth()">
+      next
+    </button>
 
   </div>
 </div>
-
-Ten kolor to: {{outlineColor.color}} da dam

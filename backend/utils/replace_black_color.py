@@ -7,11 +7,8 @@ def hex_to_rgb(value):
     lv = len(value)
     result = [int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3)]
 
-    print(result)
-
     result.reverse()
     result.append(255)
-    print(result)
     return result
 
 
