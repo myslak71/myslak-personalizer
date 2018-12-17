@@ -12,6 +12,8 @@ import {OutlineColor} from "./myslaks/outlineColor.model";
 import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
 import {FillingColor} from "./myslaks/fillingColor.model";
 import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
+import * as Auth0 from 'auth0-web';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -19,16 +21,19 @@ import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
+  authenticated = false;
   title = 'Wonderful Myslak World';
 
   fillingColorSubs: Subscription;
-  fillingColor: FillingColor;
+  fillingColor = new FillingColor('#f0f034', '')
 
   outlineColorSubs: Subscription;
-  outlineColor: OutlineColor;
+  outlineColor = new OutlineColor('#000000', '')
 
   myslaksListSubs: Subscription;
   myslaksList: Myslak[];
+  myslakSubs: Subscription;
+  myslak = new Myslak('', '', '', '', 1, 1, 1);
 
   headsListSubs: Subscription;
   headsList: Head[];
@@ -40,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   clothesListSubs: Subscription;
   clothesList: Cloth[];
-  currentCloth = 0
+  currentCloth = 0;
 
   constructor(
     private myslaksApi: MyslaksApiService,
@@ -48,12 +53,19 @@ export class AppComponent implements OnInit, OnDestroy {
     private backgroundsApi: BackgroundsApiService,
     private clothesApi: ClothesApiService,
     private outlineColorApi: OutlineColorApiService,
-    private fillingColorApi: FillingColorApiService
+    private fillingColorApi: FillingColorApiService,
+    private router: Router
   ) {
   }
 
+  signIn = Auth0.signIn;
+  signOut = Auth0.signOut;
+  getProfile = Auth0.getProfile;
+
 
   ngOnInit() {
+
+
     this.myslaksListSubs = this.myslaksApi
       .getMyslaks()
       .subscribe(res => {
@@ -82,12 +94,10 @@ export class AppComponent implements OnInit, OnDestroy {
       .getClothes()
       .subscribe(res => {
           this.clothesList = res;
-          console.log('elo')
         },
         console.error
       );
 
-    console.log('kolor to', this.outlineColor)
     this.outlineColorSubs = this.outlineColorApi
       .getOutlineColor()
       .subscribe(res => {
@@ -99,8 +109,15 @@ export class AppComponent implements OnInit, OnDestroy {
       .getFillingColor()
       .subscribe(res => {
           this.fillingColor = res
+
         },
         console.error)
+
+
+    const self = this;
+    Auth0.subscribe((authenticated) => (self.authenticated = authenticated));
+
+
   };
 
   ngOnDestroy() {
@@ -112,21 +129,23 @@ export class AppComponent implements OnInit, OnDestroy {
     this.fillingColorSubs.unsubscribe();
   };
 
+
   onClickOutlineColor() {
     this.outlineColorApi.updateOutlineColor(this.outlineColor)
       .subscribe(res => {
         this.outlineColor = res;
+        this.myslak.outline_color = this.outlineColor.color
       }, err => {
         console.log(err)
       })
   }
 
   onClickFillingColor() {
-    console.log('weszlem!')
     this.fillingColorApi.updateFillingColor(this.fillingColor)
       .subscribe(res => {
-        console.log('weszlem2!', res)
         this.fillingColor = res;
+        this.myslak.filling_color = this.fillingColor.color
+
       }, err => {
         console.log(err)
       })
@@ -136,36 +155,55 @@ export class AppComponent implements OnInit, OnDestroy {
   OnClickNextBackground() {
     if (this.currentBackground != this.backgroundsList.length - 1) {
       this.currentBackground++
+      this.myslak.background = this.backgroundsList[this.currentBackground].id
     }
   }
 
   OnClickPreviousBackground() {
     if (this.currentBackground != 0) {
       this.currentBackground--
+      this.myslak.background = this.backgroundsList[this.currentBackground].id
     }
   }
 
   OnClickNextHead() {
     if (this.currentHead != this.headsList.length - 1) {
       this.currentHead++
+      this.myslak.head = this.headsList[this.currentHead].id
+
     }
   }
 
   OnClickPreviousHead() {
     if (this.currentHead != 0) {
       this.currentHead--
+      this.myslak.head = this.headsList[this.currentHead].id
     }
   }
 
   OnClickNextCloth() {
     if (this.currentCloth != this.clothesList.length - 1) {
       this.currentCloth++
+      this.myslak.cloth = this.clothesList[this.currentCloth].id
+      console.log(this.myslak)
     }
   }
 
   OnClickPreviousCloth() {
     if (this.currentCloth != 0) {
       this.currentCloth--
+      this.myslak.cloth = this.clothesList[this.currentCloth].id
+
     }
+  }
+
+  OnClickSaveMyslak() {
+    console.log('siemanko')
+    this.myslaksApi
+      .saveMyslak(this.myslak)
+      .subscribe(
+        () => this.router.navigate(['/']),
+        error => alert(error.message)
+      );
   }
 }

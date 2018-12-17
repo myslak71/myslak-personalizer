@@ -1,9 +1,13 @@
 export class Myslak {
   constructor(
-    public title: string,
+    public name: string,
     public description: string,
-    public background_url: string,
-    public _id?: number,
+    public outline_color: string,
+    public filling_color: string,
+    public background: number,
+    public cloth: number,
+    public head: number,
+    public id?: number,
     public updatedAt?: Date,
     public createdAt?: Date,
     public lastUpdatedBy?: string,

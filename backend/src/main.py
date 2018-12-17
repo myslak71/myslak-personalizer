@@ -10,6 +10,7 @@ from .entities.background import Background, BackgroundSchema
 from .entities.cloth import Cloth, ClothSchema
 from .entities.outline_color import OutlineColor, OutlineColorSchema
 from .entities.filling_color import FillingColor, FillingColorSchema
+from .auth import AuthError, requires_auth
 
 from ..utils.replace_black_color import replace_black_color, cv, np
 
@@ -32,6 +33,8 @@ def after_request(response):
 
 
 @app.route('/myslaks')
+
+@requires_auth
 def get_myslaks():
     # fetching from the database
     session = Session()
@@ -45,24 +48,25 @@ def get_myslaks():
     session.close()
     return jsonify(myslaks.data)
 
-
+@requires_auth
 @app.route('/myslaks', methods=['POST'])
 def add_myslak():
-    # mount exam object
-    posted_myslak = MyslakSchema(only=('title', 'description', 'background_url')).load(request.get_json())
+    print(request.get_json())
+    posted_myslak = MyslakSchema(only=('name', 'description',
+                                       'outline_color', 'filling_color',
+                                       'background', 'cloth', 'head')).load(request.get_json())
+    print(posted_myslak)
     myslak = Myslak(**posted_myslak.data, created_by="HTTP post request")
 
-    # persist exam
     session = Session()
     session.add(myslak)
     session.commit()
 
-    # return created exam
     new_myslak = MyslakSchema().dump(myslak).data
     session.close()
     return jsonify(new_myslak), 201
 
-
+@requires_auth
 @app.route('/myslak/1', methods=['GET'])
 def show_myslak():
     session = Session()
@@ -78,7 +82,7 @@ def show_myslak():
 
     return jsonify(myslak.data)
 
-
+@requires_auth
 @app.route('/heads', methods=['GET'])
 def get_heads():
     # fetching from the database
@@ -93,7 +97,7 @@ def get_heads():
     session.close()
     return jsonify(heads.data)
 
-
+@requires_auth
 @app.route('/heads/<int:head_id>')
 def get_head(head_id):
     session = Session()
@@ -107,7 +111,7 @@ def get_head(head_id):
     session.close()
     return jsonify(head.data)
 
-
+@requires_auth
 @app.route('/backgrounds', methods=['GET'])
 def get_backgrounds():
     # fetching from the database
@@ -122,7 +126,7 @@ def get_backgrounds():
     session.close()
     return jsonify(backgrounds.data)
 
-
+@requires_auth
 @app.route('/backgrounds/<int:background_id>')
 def get_background(background_id):
     session = Session()
@@ -136,7 +140,7 @@ def get_background(background_id):
     session.close()
     return jsonify(background.data)
 
-
+@requires_auth
 @app.route('/clothes', methods=['GET'])
 def get_clothes():
     # fetching from the database
@@ -151,7 +155,7 @@ def get_clothes():
     session.close()
     return jsonify(clothes.data)
 
-
+@requires_auth
 @app.route('/clothes/<int:cloth_id>')
 def get_cloth(cloth_id):
     session = Session()
@@ -165,7 +169,7 @@ def get_cloth(cloth_id):
     session.close()
     return jsonify(cloth.data)
 
-
+@requires_auth
 @app.route('/outline_color', methods=['POST'])
 def update_outline_color():
     new_color = request.get_json().get('color')
@@ -184,7 +188,7 @@ def update_outline_color():
     cos = schema.dump(new)
     return jsonify(cos.data)
 
-
+@requires_auth
 @app.route('/outline_color', methods=['GET'])
 def get_outline_color():
     with open(f'./static/img/outline.png', 'rb') as image:
@@ -194,6 +198,8 @@ def get_outline_color():
     cos = schema.dump(new)
     return jsonify(cos.data)
 
+
+@requires_auth
 @app.route('/filling_color', methods=['POST'])
 def update_filling_color():
     new_color = request.get_json().get('color')
@@ -212,7 +218,7 @@ def update_filling_color():
     cos = schema.dump(new)
     return jsonify(cos.data)
 
-
+@requires_auth
 @app.route('/filling_color', methods=['GET'])
 def get_filling_color():
     new_color = "#F0F034"

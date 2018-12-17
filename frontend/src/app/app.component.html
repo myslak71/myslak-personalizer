@@ -53,5 +53,15 @@
       next
     </button>
 
+
+    <div>
+      <button (click)="OnClickSaveMyslak()">Save Myslak</button>
+      <button (click)="signIn()" *ngIf="!authenticated">Sign In</button>
+      <button (click)="signOut()" *ngIf="authenticated">Sign Out</button>
+      <p *ngIf="authenticated">Hello, {{getProfile().name}}</p>
+
+    </div>
+
+
   </div>
 </div>
