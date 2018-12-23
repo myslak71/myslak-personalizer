@@ -22,7 +22,7 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit, OnDestroy {
   authenticated = false;
-  title = 'Wonderful Myslak World';
+  title = 'Create your own Myslak!';
 
   fillingColorSubs: Subscription;
   fillingColor = new FillingColor('#f0f034', '')
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
   myslaksListSubs: Subscription;
   myslaksList: Myslak[];
   myslakSubs: Subscription;
-  myslak = new Myslak('', '', '', '', 1, 1, 1);
+  myslak = new Myslak('Myslak', 'Your own Myslak', '#000000', '#f0f034', 1, 1, 1);
 
   headsListSubs: Subscription;
   headsList: Head[];
@@ -64,15 +64,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-
-
-    this.myslaksListSubs = this.myslaksApi
-      .getMyslaks()
-      .subscribe(res => {
-          this.myslaksList = res;
-        },
-        console.error
-      );
 
     this.headsListSubs = this.headsApi
       .getHeads()

@@ -5,6 +5,7 @@ import numpy as np
 def hex_to_rgb(value):
     value = value.lstrip('#')
     lv = len(value)
+    print(lv)
     result = [int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3)]
 
     result.reverse()

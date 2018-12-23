@@ -1,6 +1,6 @@
 from base64 import b64encode
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 
 from .entities.entity import Session, engine, Base
@@ -11,8 +11,10 @@ from .entities.cloth import Cloth, ClothSchema
 from .entities.outline_color import OutlineColor, OutlineColorSchema
 from .entities.filling_color import FillingColor, FillingColorSchema
 from .auth import AuthError, requires_auth
+from PIL import Image
 
 from ..utils.replace_black_color import replace_black_color, cv, np
+from backend.config import IMG_PATH
 
 # creating the Flask application
 
@@ -33,7 +35,6 @@ def after_request(response):
 
 
 @app.route('/myslaks')
-
 @requires_auth
 def get_myslaks():
     # fetching from the database
@@ -48,23 +49,53 @@ def get_myslaks():
     session.close()
     return jsonify(myslaks.data)
 
+
 @requires_auth
 @app.route('/myslaks', methods=['POST'])
 def add_myslak():
-    print(request.get_json())
+
     posted_myslak = MyslakSchema(only=('name', 'description',
                                        'outline_color', 'filling_color',
                                        'background', 'cloth', 'head')).load(request.get_json())
-    print(posted_myslak)
     myslak = Myslak(**posted_myslak.data, created_by="HTTP post request")
 
     session = Session()
-    session.add(myslak)
-    session.commit()
+    outline_color = myslak.outline_color
+    filling_color = myslak.filling_color
+
+    black_outline = cv.imread('./static/img/outline.png', cv.IMREAD_UNCHANGED)
+    new_outline_image = replace_black_color(black_outline, outline_color)
+    cv.imwrite(f'{IMG_PATH}/combine_outline.png', new_outline_image, [cv.IMWRITE_PNG_COMPRESSION, 9])
+    new_outline_image = Image.open(f'{IMG_PATH}/combine_outline.png')
+
+    black_filling = cv.imread('./static/img/filling.png', cv.IMREAD_UNCHANGED)
+    new_filling_image = replace_black_color(black_filling, filling_color)
+    cv.imwrite(f'{IMG_PATH}/combine_filling.png', new_filling_image, [cv.IMWRITE_PNG_COMPRESSION, 9])
+    new_filling_image = Image.open(f'{IMG_PATH}/combine_filling.png')
+    print('wypelnienie', new_filling_image)
+
+    background = session.query(Background).get(myslak.background).image_url
+    cloth = session.query(Cloth).get(myslak.cloth).image_url
+    head = session.query(Head).get(myslak.head).image_url
+
+    background_image = Image.open(f'{IMG_PATH}/{background}')
+    cloth_image = Image.open(f'{IMG_PATH}/{cloth}')
+    head_image = Image.open(f'{IMG_PATH}/{head}')
+    result = Image.open(f'{IMG_PATH}/result.png')
+
+    images = (background_image, new_outline_image, new_filling_image, cloth_image, head_image)
+
+    for image in images:
+        result = Image.open(f'{IMG_PATH}/result.png')
+        Image.alpha_composite(result, image).save(f'{IMG_PATH}/result.png')
 
     new_myslak = MyslakSchema().dump(myslak).data
     session.close()
-    return jsonify(new_myslak), 201
+    print('siemmaaa2')
+
+    return send_file(f'{IMG_PATH}/result.png', as_attachment=True)
+    # return jsonify(new_myslak), 201
+
 
 @requires_auth
 @app.route('/myslak/1', methods=['GET'])
@@ -82,6 +113,7 @@ def show_myslak():
 
     return jsonify(myslak.data)
 
+
 @requires_auth
 @app.route('/heads', methods=['GET'])
 def get_heads():
@@ -97,6 +129,7 @@ def get_heads():
     session.close()
     return jsonify(heads.data)
 
+
 @requires_auth
 @app.route('/heads/<int:head_id>')
 def get_head(head_id):
@@ -110,6 +143,7 @@ def get_head(head_id):
     # serializing as JSON
     session.close()
     return jsonify(head.data)
+
 
 @requires_auth
 @app.route('/backgrounds', methods=['GET'])
@@ -126,6 +160,7 @@ def get_backgrounds():
     session.close()
     return jsonify(backgrounds.data)
 
+
 @requires_auth
 @app.route('/backgrounds/<int:background_id>')
 def get_background(background_id):
@@ -139,6 +174,7 @@ def get_background(background_id):
     # serializing as JSON
     session.close()
     return jsonify(background.data)
+
 
 @requires_auth
 @app.route('/clothes', methods=['GET'])
@@ -155,6 +191,7 @@ def get_clothes():
     session.close()
     return jsonify(clothes.data)
 
+
 @requires_auth
 @app.route('/clothes/<int:cloth_id>')
 def get_cloth(cloth_id):
@@ -168,6 +205,7 @@ def get_cloth(cloth_id):
     # serializing as JSON
     session.close()
     return jsonify(cloth.data)
+
 
 @requires_auth
 @app.route('/outline_color', methods=['POST'])
@@ -187,6 +225,7 @@ def update_outline_color():
     schema = OutlineColorSchema()
     cos = schema.dump(new)
     return jsonify(cos.data)
+
 
 @requires_auth
 @app.route('/outline_color', methods=['GET'])
@@ -217,6 +256,7 @@ def update_filling_color():
     schema = FillingColorSchema()
     cos = schema.dump(new)
     return jsonify(cos.data)
+
 
 @requires_auth
 @app.route('/filling_color', methods=['GET'])
