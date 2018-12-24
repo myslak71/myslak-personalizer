@@ -12,7 +12,6 @@ import {OutlineColor} from "./myslaks/outlineColor.model";
 import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
 import {FillingColor} from "./myslaks/fillingColor.model";
 import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
-import * as Auth0 from 'auth0-web';
 import {Router} from "@angular/router";
 
 @Component({
@@ -58,10 +57,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  signIn = Auth0.signIn;
-  signOut = Auth0.signOut;
-  getProfile = Auth0.getProfile;
-
 
   ngOnInit() {
 
@@ -106,7 +101,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
     const self = this;
-    Auth0.subscribe((authenticated) => (self.authenticated = authenticated));
 
 
   };
@@ -190,11 +184,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   OnClickSaveMyslak() {
     console.log('siemanko')
-    this.myslaksApi
-      .saveMyslak(this.myslak)
-      .subscribe(
-        () => this.router.navigate(['/']),
-        error => alert(error.message)
-      );
+
   }
 }

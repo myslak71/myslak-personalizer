@@ -1,5 +1,3 @@
-from base64 import b64encode
-
 from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 
@@ -10,22 +8,21 @@ from .entities.background import Background, BackgroundSchema
 from .entities.cloth import Cloth, ClothSchema
 from .entities.outline_color import OutlineColor, OutlineColorSchema
 from .entities.filling_color import FillingColor, FillingColorSchema
-from .auth import AuthError, requires_auth
 from PIL import Image
+from base64 import b64encode
 
-from ..utils.replace_black_color import replace_black_color, cv, np
+from ..utils.replace_black_color import replace_black_color, cv
 from backend.config import IMG_PATH
 
 # creating the Flask application
-
 app = Flask(__name__, static_url_path='')
 CORS(app)
 
-# if needed, generate database schema
+# if needed, generates database schema
 Base.metadata.create_all(engine)
 
 
-# ignores OPTIONS method
+# ignoring OPTIONS method
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -34,26 +31,8 @@ def after_request(response):
     return response
 
 
-@app.route('/myslaks')
-@requires_auth
-def get_myslaks():
-    # fetching from the database
-    session = Session()
-    myslak_objects = session.query(Myslak).all()
-
-    # transforming into JSON-serializable objects
-    schema = MyslakSchema(many=True)
-    myslaks = schema.dump(myslak_objects)
-
-    # serializing as JSON
-    session.close()
-    return jsonify(myslaks.data)
-
-
-@requires_auth
-@app.route('/myslaks', methods=['POST'])
+@app.route('/myslak', methods=['POST'])
 def add_myslak():
-
     posted_myslak = MyslakSchema(only=('name', 'description',
                                        'outline_color', 'filling_color',
                                        'background', 'cloth', 'head')).load(request.get_json())
@@ -97,24 +76,6 @@ def add_myslak():
     # return jsonify(new_myslak), 201
 
 
-@requires_auth
-@app.route('/myslak/1', methods=['GET'])
-def show_myslak():
-    session = Session()
-    myslak_object = session.query(Myslak).get(4)
-    print(myslak_object)
-
-    # transforming into JSON-serializable objects
-    schema = MyslakSchema()
-    myslak = schema.dump(myslak_object)
-
-    # serializing as JSON
-    session.close()
-
-    return jsonify(myslak.data)
-
-
-@requires_auth
 @app.route('/heads', methods=['GET'])
 def get_heads():
     # fetching from the database
@@ -130,7 +91,6 @@ def get_heads():
     return jsonify(heads.data)
 
 
-@requires_auth
 @app.route('/heads/<int:head_id>')
 def get_head(head_id):
     session = Session()
@@ -145,7 +105,6 @@ def get_head(head_id):
     return jsonify(head.data)
 
 
-@requires_auth
 @app.route('/backgrounds', methods=['GET'])
 def get_backgrounds():
     # fetching from the database
@@ -161,7 +120,6 @@ def get_backgrounds():
     return jsonify(backgrounds.data)
 
 
-@requires_auth
 @app.route('/backgrounds/<int:background_id>')
 def get_background(background_id):
     session = Session()
@@ -176,7 +134,6 @@ def get_background(background_id):
     return jsonify(background.data)
 
 
-@requires_auth
 @app.route('/clothes', methods=['GET'])
 def get_clothes():
     # fetching from the database
@@ -192,7 +149,6 @@ def get_clothes():
     return jsonify(clothes.data)
 
 
-@requires_auth
 @app.route('/clothes/<int:cloth_id>')
 def get_cloth(cloth_id):
     session = Session()
@@ -207,13 +163,11 @@ def get_cloth(cloth_id):
     return jsonify(cloth.data)
 
 
-@requires_auth
 @app.route('/outline_color', methods=['POST'])
 def update_outline_color():
     new_color = request.get_json().get('color')
     black_outline = cv.imread('./static/img/outline.png', cv.IMREAD_UNCHANGED)
 
-    from base64 import b64encode
     # TODO gotta fix that, move it to the class
 
     new_outline_image = replace_black_color(black_outline, new_color)
@@ -221,44 +175,38 @@ def update_outline_color():
 
     with open(f'./static/img/output.png', 'rb') as image:
         new_outline_b64 = b64encode(image.read())
-    new = OutlineColor(new_color, new_outline_b64, "kibel")
+    new = OutlineColor(new_color, new_outline_b64)
     schema = OutlineColorSchema()
     cos = schema.dump(new)
     return jsonify(cos.data)
 
 
-@requires_auth
 @app.route('/outline_color', methods=['GET'])
 def get_outline_color():
     with open(f'./static/img/outline.png', 'rb') as image:
         new_outline_b64 = b64encode(image.read())
-    new = OutlineColor('#000000', new_outline_b64, "kibel")
+    new = OutlineColor('#000000', new_outline_b64)
     schema = OutlineColorSchema()
     cos = schema.dump(new)
     return jsonify(cos.data)
 
 
-@requires_auth
 @app.route('/filling_color', methods=['POST'])
 def update_filling_color():
     new_color = request.get_json().get('color')
     black_filling = cv.imread('./static/img/filling.png', cv.IMREAD_UNCHANGED)
-
-    from base64 import b64encode
-    # TODO gotta fix that, move it to the class
 
     new_filling_image = replace_black_color(black_filling, new_color)
     cv.imwrite('./static/img/filling_output.png', new_filling_image, [cv.IMWRITE_PNG_COMPRESSION, 9])
 
     with open(f'./static/img/filling_output.png', 'rb') as image:
         new_outline_b64 = b64encode(image.read())
-    new = FillingColor(new_color, new_outline_b64, "kibel")
+    new = FillingColor(new_color, new_outline_b64)
     schema = FillingColorSchema()
     cos = schema.dump(new)
     return jsonify(cos.data)
 
 
-@requires_auth
 @app.route('/filling_color', methods=['GET'])
 def get_filling_color():
     new_color = "#F0F034"
@@ -272,7 +220,7 @@ def get_filling_color():
 
     with open(f'./static/img/filling_output.png', 'rb') as image:
         new_outline_b64 = b64encode(image.read())
-    new = FillingColor(new_color, new_outline_b64, "kibel")
+    new = FillingColor(new_color, new_outline_b64)
     schema = FillingColorSchema()
     cos = schema.dump(new)
     return jsonify(cos.data)

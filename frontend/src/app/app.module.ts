@@ -10,13 +10,10 @@ import {BackgroundsApiService} from "./myslaks/backgrounds-api.service";
 import {ClothesApiService} from "./myslaks/clothes-api.service";
 import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
 import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
-import {CallbackComponent} from './callback.component';
 import {RouterModule, Routes} from "@angular/router";
-import * as Auth0 from 'auth0-web';
 
 
 const appRoutes: Routes = [
-  { path: 'callback', component: CallbackComponent },
   { path: 'save-myslak', component: AppComponent },
   // ... other routes ...
 ];
@@ -25,8 +22,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CallbackComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -48,12 +44,5 @@ const appRoutes: Routes = [
 })
 export class AppModule {
   constructor() {
-    Auth0.configure({
-      domain: 'createyourmyslak.auth0.com',
-      audience: 'https://createyourmyslak.com',
-      clientID: 'VOS5k5Kv5ajaIxUyEybOushhs5BvPJxf',
-      redirectUri: 'http://localhost:4200/callback',
-      scope: 'openid profile manage:myslaks'
-    });
   }
 }
