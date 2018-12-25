@@ -2,16 +2,16 @@ import cv2 as cv
 import numpy as np
 
 
-def hex_to_rgb(value):
-    value = value.lstrip('#')
-    lv = len(value)
-    result = [int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3)]
+def hex_to_rgb(hex_color):
+    hex_color = hex_color.lstrip('#')
+    lv = len(hex_color)
 
-    print(result)
-
+    result = [int(hex_color[i:i + lv // 3], 16) for i in range(0, lv, lv // 3)]
     result.reverse()
+
+    # adding alpha channel
     result.append(255)
-    print(result)
+
     return result
 
 

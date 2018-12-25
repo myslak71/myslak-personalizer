@@ -10,6 +10,15 @@ import {BackgroundsApiService} from "./myslaks/backgrounds-api.service";
 import {ClothesApiService} from "./myslaks/clothes-api.service";
 import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
 import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
+import {RouterModule, Routes} from "@angular/router";
+
+
+const appRoutes: Routes = [
+  { path: 'save-myslak', component: AppComponent },
+  // ... other routes ...
+];
+
+
 
 @NgModule({
   declarations: [
@@ -18,7 +27,10 @@ import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(
+      appRoutes,
+    ),
   ],
   providers: [
     MyslaksApiService,
@@ -31,4 +43,6 @@ import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor() {
+  }
 }

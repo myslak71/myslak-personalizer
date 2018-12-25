@@ -1,42 +1,63 @@
-Ten kolor to: {{outlineColor.color}} da dam
-<div style="text-align:center">
-</div>
-<div class="row" style="border-style: groove;border-color: coral;border-width: 7px;">
-  <div class="col-sm-8" style="border-style: groove;
-    border-color: coral;
-    border-width: 7px;">Obrazek
-    <img src="data:image/png;base64,{{backgroundsList[0].image_url}}" style="position:absolute; top:0; left:0;">
-    <!--<img src="data:image/png;base64,{{headsList[1].image_url}}" style="position:absolute; top:0; left:0;">-->
-    <!--<img src="data:image/png;base64,{{headsList[2].image_url}}" style="position:absolute; top:0; left:0;">-->
-    <img class="e2e-trusted-url" src="data:image/png;base64,{{outlineColor.image_url}}"
-         style="position:absolute; top:0; left:0;">
+<div class="row container-fluid display-flex">
 
-    <img class="e2e-trusted-url" src="data:image/png;base64,{{fillingColor.image_url}}"
+  <div class="col-6" >
+    <img class="img-fluid rounded-circle clearfix" src="data:image/png;base64,{{backgroundsList[currentBackground].image_url}}"
          style="position:absolute; top:0; left:0;">
+    <img class="e2e-trusted-url img-fluid clearfix rounded-circle  " src="data:image/png;base64,{{outlineColor.image_url}}"
+         style="position:absolute; top:0; left:0">
+    <img class="e2e-trusted-url img-fluid rounded-circle clearfix" src="data:image/png;base64,{{fillingColor.image_url}}"
+         style="position:absolute; top:0; left:0">
+    <img class="e2e-trusted-url img-fluid rounded-circle clearfix"
+         src="data:image/png;base64,{{clothesList[currentCloth].image_url}}"
+         style="position:absolute; top:0; left:0">
 
-    <!--<img src="data:image/png;base64,{{outlineColor.image_url}}" style="position:absolute; top:0; left:0;">-->
-    <img src="data:image/png;base64,{{clothesList[0].image_url}}" style="position:absolute; top:0; left:0;">
-    <!--<img src="data:image/png;base64,{{headsList[3].image_url}}" style="position:absolute; top:0; left:0;">-->
+    <img class="e2e-trusted-url img-fluid rounded-circle clearfix"
+         src="data:image/png;base64,{{headsList[currentHead].image_url}}"
+         style="position:absolute; top:0; left:0">
+
   </div>
-  <div class="col" style="border-style: groove;
-    border-color: coral;
-    border-width: 7px;">
+
+  <div class="col-2 display-flex">
     <label for="outlineColor">
       Outline color:
-      <input class="form-control" type="color" [(ngModel)]="outlineColor.color" id="outlineColor" name="outlineColor">
+      <input class="form-inline" type="color" [(ngModel)]="outlineColor.color" (change)="onClickOutlineColor()"
+             id="outlineColor" name="outlineColor">
     </label>
-    <button (click)="onClickOutlineColor()">
-      change
-    </button>
     <label for="fillingColor">
       Filling color:
-      <input class="form-control" type="color" [(ngModel)]="fillingColor.color" id="fillingColor" name="fillingColor">
+      <input class="form-inline" type="color" [(ngModel)]="fillingColor.color" (change)="onClickFillingColor()"
+             id="fillingColor" name="fillingColor">
     </label>
-    <button (click)="onClickFillingColor()">
-      change
+    <div>
+      <button (click)="OnClickPreviousHead()">
+        previous
+      </button>
+      <button (click)="OnClickNextHead()">
+        next
+      </button>
+    </div>
+    <div>
+    <button (click)="OnClickPreviousBackground()">
+      previous
     </button>
-
-  </div>
+    <button (click)="OnClickNextBackground()">
+      next
+    </button>
+</div>
+    <div>
+    <button (click)="OnClickPreviousCloth()">
+      previous
+    </button>
+    <button (click)="OnClickNextCloth()">next</button>
 </div>
 
-Ten kolor to: {{outlineColor.color}} da dam
+    </div>
+    <div>
+    <button (click)="OnClickSaveMyslak()">
+      Download
+    </button>
+</div>
+
+
+
+</div>

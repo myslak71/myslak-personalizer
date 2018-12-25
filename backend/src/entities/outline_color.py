@@ -11,8 +11,7 @@ class OutlineColor(Entity, Base):
     color = Column(String)
     image_url = Column(String)
 
-    def __init__(self, color, image_url, created_by):
-        Entity.__init__(self, created_by)
+    def __init__(self, color, image_url):
         self.color = color
         self.image_url = image_url
 

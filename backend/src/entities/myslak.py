@@ -8,24 +8,30 @@ from .entity import Entity, Base
 class Myslak(Entity, Base):
     __tablename__ = 'myslaks'
 
-    title = Column(String)
+    name = Column(String)
     description = Column(String)
-    background_url = Column(String)
-    head_url = Column(String)
-    cloth_url = Column(String)
+    outline_color = Column(String)
+    filling_color = Column(String)
+    background = Column(String)
+    head = Column(String)
+    cloth = Column(String)
 
-    def __init__(self, title, description, created_by, background_url):
-        Entity.__init__(self, created_by)
-        self.title = title
+    def __init__(self, name, description, outline_color, filling_color, background, head, cloth):
+        self.name = name
         self.description = description
-        self.background_url= background_url
+        self.outline_color = outline_color
+        self.filling_color = filling_color
+        self.background = background
+        self.head = head
+        self.cloth = cloth
 
 
 class MyslakSchema(Schema):
     id = fields.Number()
-    title = fields.Str()
+    name = fields.Str()
     description = fields.Str()
-    background_url = fields.Str()
-    created_at = fields.DateTime()
-    updated_at = fields.DateTime()
-    last_updated_by = fields.Str()
+    outline_color = fields.Str()
+    filling_color = fields.Str()
+    background = fields.Number()
+    head = fields.Number()
+    cloth = fields.Number()
