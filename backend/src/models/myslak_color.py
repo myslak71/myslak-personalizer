@@ -1,11 +1,11 @@
-from marshmallow import Schema, fields, pre_dump
+from marshmallow import Schema, fields
 
 from sqlalchemy import Column, String
 
-from .entity import Entity, Base, AppearanceBase
+from .model import Model, Base, AppearanceBase
 
 
-class FillingColor(Entity, Base):
+class MyslakColor(Model, Base):
     __tablename__ = 'filling_color'
 
     color = Column(String)
@@ -16,10 +16,7 @@ class FillingColor(Entity, Base):
         self.image_url = image_url
 
 
-class FillingColorSchema(Schema, AppearanceBase):
+class MyslakColorSchema(Schema, AppearanceBase):
     id = fields.Number()
     color = fields.Str()
     image_url = fields.Str()
-
-
-

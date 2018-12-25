@@ -2,11 +2,11 @@ from marshmallow import Schema, fields, pre_dump
 
 from sqlalchemy import Column, String
 
-from .entity import Entity, Base, AppearanceBase
+from .model import Model, Base, AppearanceBase
 
 
-class Head(Entity, Base):
-    __tablename__ = 'heads'
+class Cloth(Model, Base):
+    __tablename__ = 'clothes'
 
     name = Column(String)
     image_url = Column(String)
@@ -16,17 +16,12 @@ class Head(Entity, Base):
         self.image_url = image_url
 
 
-class HeadSchema(Schema, AppearanceBase):
+class ClothSchema(Schema, AppearanceBase):
     id = fields.Number()
     name = fields.Str()
     image_url = fields.Str()
 
     @pre_dump(pass_many=True)
     def convert_image_base64(self, data, many):
-        if many:
-            self.convert_many_base64(data)
-
-        else:
-            self.convert_one_base64(data)
-
+        self.convert_to_base64(*data)
         return data

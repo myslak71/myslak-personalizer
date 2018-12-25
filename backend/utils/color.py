@@ -1,5 +1,11 @@
-import cv2 as cv
+from random import randint
+
 import numpy as np
+
+
+def generate_random_color():
+    color = "#%06x" % randint(0, 0xFFFFFF)
+    return color
 
 
 def hex_to_rgb(hex_color):

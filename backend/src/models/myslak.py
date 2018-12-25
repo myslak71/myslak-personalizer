@@ -2,10 +2,10 @@ from marshmallow import Schema, fields
 
 from sqlalchemy import Column, String
 
-from .entity import Entity, Base
+from .model import Model, Base
 
 
-class Myslak(Entity, Base):
+class Myslak(Model, Base):
     __tablename__ = 'myslaks'
 
     name = Column(String)

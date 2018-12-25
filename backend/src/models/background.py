@@ -2,10 +2,10 @@ from marshmallow import Schema, fields, pre_dump
 
 from sqlalchemy import Column, String
 
-from .entity import Entity, Base, AppearanceBase
+from .model import Model, Base, AppearanceBase
 
 
-class Background(Entity, Base):
+class Background(Model, Base):
     __tablename__ = 'backgrounds'
 
     name = Column(String)
@@ -23,9 +23,5 @@ class BackgroundSchema(Schema, AppearanceBase):
 
     @pre_dump(pass_many=True)
     def convert_image_base64(self, data, many):
-        if many:
-            self.convert_many_base64(data)
-        else:
-            self.convert_one_base64(data)
-
+        self.convert_to_base64(*data)
         return data
