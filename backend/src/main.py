@@ -2,13 +2,12 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 from backend.src.get_changed_image_color_data import get_changed_image_color_data
-from backend.src.get_images_urls import get_images_urls
+from backend.src.compose_myslak_image import compose_myslak_image
 from .models.model import Session, engine, Base
 from .models.myslak import Myslak, MyslakSchema
 from .models.head import Head, HeadSchema
 from .models.background import Background, BackgroundSchema
 from .models.cloth import Cloth, ClothSchema
-from PIL import Image
 
 from backend.utils.color import generate_random_color
 
@@ -37,12 +36,7 @@ def download_myslak():
 
     session = Session()
 
-    images_urls = get_images_urls(myslak, session)
-
-    for url in images_urls:
-        current_image = Image.open(url)
-        result = Image.open(f'{IMG_PATH}/result.png')
-        Image.alpha_composite(result, current_image).save(f'{IMG_PATH}/result.png')
+    compose_myslak_image(myslak, session)
 
     session.close()
     return send_from_directory(f'{IMG_PATH}/', 'result.png', as_attachment=True)
@@ -106,6 +100,3 @@ def update_filling_color():
 def get_filling_color():
     new_color = generate_random_color()
     return jsonify(get_changed_image_color_data(new_color, './static/img/filling.png'))
-
-
-

@@ -1,4 +1,5 @@
 import cv2 as cv
+from PIL import Image
 
 from backend.config import IMG_PATH
 from backend.src.models.background import Background
@@ -7,7 +8,7 @@ from backend.src.models.head import Head
 from backend.utils.color import replace_black_color
 
 
-def get_images_urls(myslak, session):
+def compose_myslak_image(myslak, session):
     black_outline = cv.imread('./static/img/outline.png', cv.IMREAD_UNCHANGED)
     new_outline_image = replace_black_color(black_outline, myslak.outline_color)
     cv.imwrite(f'{IMG_PATH}/new_outline_image.png', new_outline_image, [cv.IMWRITE_PNG_COMPRESSION, 9])
@@ -28,4 +29,8 @@ def get_images_urls(myslak, session):
         f'{IMG_PATH}/{head}'
     )
 
-    return images_urls
+    for url in images_urls:
+        current_image = Image.open(url)
+        result = Image.open(f'{IMG_PATH}/result.png')
+        Image.alpha_composite(result, current_image).save(f'{IMG_PATH}/result.png')
+
