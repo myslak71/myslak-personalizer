@@ -1,15 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-.row.display-flex {
-  display: flex;
-  flex-wrap: wrap;
-}
-.row.display-flex > [class*='col-'] {
-  display: flex;
-  flex-direction: column;
+.row > div{
+        margin-bottom: 105px;
+    }
+
+
+.myslak-form {
+  margin-bottom: 10px;
 }
 
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
+.color-btn {
+  margin-top: 10px;
 }
+
+.content-top-margin {
+  margin-top: 20px;
+}
+
