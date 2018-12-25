@@ -12,7 +12,6 @@ import {OutlineColor} from "./myslaks/outlineColor.model";
 import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
 import {FillingColor} from "./myslaks/fillingColor.model";
 import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
-import {Router} from "@angular/router";
 
 import {saveAs as importedSaveAs} from "file-saver";
 
@@ -26,15 +25,13 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'Create your own Myslak!';
 
   fillingColorSubs: Subscription;
-  fillingColor = new FillingColor('#f0f034', '')
+  fillingColor: FillingColor;
 
   outlineColorSubs: Subscription;
-  outlineColor = new OutlineColor('#000000', '')
+  outlineColor: OutlineColor;
 
-  myslaksListSubs: Subscription;
-  myslaksList: Myslak[];
   myslakSubs: Subscription;
-  myslak = new Myslak('Myslak', 'Your own Myslak', '#000000', '#f0f034', 1, 1, 1);
+  myslak: Myslak;
 
   headsListSubs: Subscription;
   headsList: Head[];
@@ -56,7 +53,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private clothesApi: ClothesApiService,
     private outlineColorApi: OutlineColorApiService,
     private fillingColorApi: FillingColorApiService,
-    private router: Router
   ) {
   }
 
@@ -90,6 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.outlineColorSubs = this.outlineColorApi
       .getOutlineColor()
       .subscribe(res => {
+          console.log(res.color)
           this.outlineColor = res
         },
         console.error)
@@ -97,19 +94,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.fillingColorSubs = this.fillingColorApi
       .getFillingColor()
       .subscribe(res => {
+          console.log(res.color)
+
           this.fillingColor = res
 
         },
         console.error)
-
-
-    const self = this;
-
-
   };
 
   ngOnDestroy() {
-    this.myslaksListSubs.unsubscribe();
+    this.myslakSubs.unsubscribe();
     this.headsListSubs.unsubscribe();
     this.backgroundsListSubs.unsubscribe();
     this.clothesListSubs.unsubscribe();
@@ -142,7 +136,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   OnClickNextBackground() {
     if (this.currentBackground != this.backgroundsList.length - 1) {
-      this.currentBackground++
+      this.currentBackground++;
       this.myslak.background = this.backgroundsList[this.currentBackground].id
     }
   }
@@ -156,7 +150,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   OnClickNextHead() {
     if (this.currentHead != this.headsList.length - 1) {
-      this.currentHead++
+      this.currentHead++;
       this.myslak.head = this.headsList[this.currentHead].id
 
     }
@@ -164,32 +158,36 @@ export class AppComponent implements OnInit, OnDestroy {
 
   OnClickPreviousHead() {
     if (this.currentHead != 0) {
-      this.currentHead--
+      this.currentHead--;
       this.myslak.head = this.headsList[this.currentHead].id
     }
   }
 
   OnClickNextCloth() {
     if (this.currentCloth != this.clothesList.length - 1) {
-      this.currentCloth++
+      this.currentCloth++;
       this.myslak.cloth = this.clothesList[this.currentCloth].id
     }
   }
 
   OnClickPreviousCloth() {
     if (this.currentCloth != 0) {
-      this.currentCloth--
+      this.currentCloth--;
       this.myslak.cloth = this.clothesList[this.currentCloth].id
 
     }
   }
 
   OnClickSaveMyslak() {
+    this.myslak = new Myslak('name','description',
+      this.outlineColor.color,this.fillingColor.color, this.backgroundsList[this.currentBackground].id,
+      this.clothesList[this.currentCloth].id, this.headsList[this.currentHead].id)
+    console.log(this.myslak)
     this.myslaksApi
       .saveMyslak(this.myslak)
       .subscribe(
         myslakImage => {
-        importedSaveAs(myslakImage, 'myslak');
+          importedSaveAs(myslakImage, 'myslak');
         },
         error => alert(error.message)
       );
