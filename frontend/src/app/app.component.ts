@@ -14,13 +14,15 @@ import {FillingColor} from "./myslaks/fillingColor.model";
 import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
 import {Router} from "@angular/router";
 
+import {saveAs as importedSaveAs} from "file-saver";
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  authenticated = false;
   title = 'Create your own Myslak!';
 
   fillingColorSubs: Subscription;
@@ -45,6 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
   clothesListSubs: Subscription;
   clothesList: Cloth[];
   currentCloth = 0;
+
 
   constructor(
     private myslaksApi: MyslaksApiService,
@@ -170,7 +173,6 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.currentCloth != this.clothesList.length - 1) {
       this.currentCloth++
       this.myslak.cloth = this.clothesList[this.currentCloth].id
-      console.log(this.myslak)
     }
   }
 
@@ -183,7 +185,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   OnClickSaveMyslak() {
-    console.log('siemanko')
-
+    this.myslaksApi
+      .saveMyslak(this.myslak)
+      .subscribe(
+        myslakImage => {
+        importedSaveAs(myslakImage, 'myslak');
+        },
+        error => alert(error.message)
+      );
   }
 }

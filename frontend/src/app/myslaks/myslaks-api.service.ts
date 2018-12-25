@@ -6,10 +6,6 @@ import {API_URL} from '../env';
 import {Myslak} from './myslak.model';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
-
 @Injectable()
 export class MyslaksApiService {
 
@@ -20,14 +16,9 @@ export class MyslaksApiService {
     return Observable.throw(err.message || 'Error: Unable to complete request.');
   }
 
-  saveMyslak(myslak: Myslak): Observable<any> {
-    return this.http
-      .post(`${API_URL}/myslaks`, myslak, httpOptions);
+
+  saveMyslak(myslak: Myslak): Observable<Blob> {
+    return this.http.post(`${API_URL}/myslak`, myslak, {responseType: 'blob'})
   }
 
-  getMyslaks(): Observable<any> {
-    return this.http
-      .get(`${API_URL}/myslaks`)
-      .catch(MyslaksApiService._handleError);
-  }
 }

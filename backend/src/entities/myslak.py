@@ -16,8 +16,7 @@ class Myslak(Entity, Base):
     head = Column(String)
     cloth = Column(String)
 
-    def __init__(self, name, description, outline_color, filling_color, background, head, cloth, created_by):
-        Entity.__init__(self, created_by)
+    def __init__(self, name, description, outline_color, filling_color, background, head, cloth):
         self.name = name
         self.description = description
         self.outline_color = outline_color
@@ -36,6 +35,3 @@ class MyslakSchema(Schema):
     background = fields.Number()
     head = fields.Number()
     cloth = fields.Number()
-    created_at = fields.DateTime()
-    updated_at = fields.DateTime()
-    last_updated_by = fields.Str()
