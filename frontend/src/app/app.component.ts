@@ -63,6 +63,8 @@ export class AppComponent implements OnInit, OnDestroy {
       .getHeads()
       .subscribe(res => {
           this.headsList = res;
+          this.currentHead = Math.floor(Math.random() * (this.headsList.length))
+          console.log(this.currentHead)
         },
         console.error
       );
@@ -71,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .getBackgrounds()
       .subscribe(res => {
           this.backgroundsList = res;
+          this.currentBackground = Math.floor(Math.random() * (this.headsList.length))
         },
         console.error
       );
@@ -79,6 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .getClothes()
       .subscribe(res => {
           this.clothesList = res;
+          this.currentCloth = Math.floor(Math.random() * (this.headsList.length))
         },
         console.error
       );
@@ -95,11 +99,11 @@ export class AppComponent implements OnInit, OnDestroy {
       .getFillingColor()
       .subscribe(res => {
           console.log(res.color)
-
           this.fillingColor = res
 
         },
         console.error)
+
   };
 
   ngOnDestroy() {
@@ -116,7 +120,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.outlineColorApi.updateOutlineColor(this.outlineColor)
       .subscribe(res => {
         this.outlineColor = res;
-        this.myslak.outline_color = this.outlineColor.color
       }, err => {
         console.log(err)
       })
@@ -126,8 +129,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.fillingColorApi.updateFillingColor(this.fillingColor)
       .subscribe(res => {
         this.fillingColor = res;
-        this.myslak.filling_color = this.fillingColor.color
-
       }, err => {
         console.log(err)
       })
@@ -137,21 +138,19 @@ export class AppComponent implements OnInit, OnDestroy {
   OnClickNextBackground() {
     if (this.currentBackground != this.backgroundsList.length - 1) {
       this.currentBackground++;
-      this.myslak.background = this.backgroundsList[this.currentBackground].id
+      console.log('aseiemase', this.currentHead)
     }
   }
 
   OnClickPreviousBackground() {
     if (this.currentBackground != 0) {
       this.currentBackground--
-      this.myslak.background = this.backgroundsList[this.currentBackground].id
     }
   }
 
   OnClickNextHead() {
     if (this.currentHead != this.headsList.length - 1) {
       this.currentHead++;
-      this.myslak.head = this.headsList[this.currentHead].id
 
     }
   }
@@ -159,28 +158,24 @@ export class AppComponent implements OnInit, OnDestroy {
   OnClickPreviousHead() {
     if (this.currentHead != 0) {
       this.currentHead--;
-      this.myslak.head = this.headsList[this.currentHead].id
     }
   }
 
   OnClickNextCloth() {
     if (this.currentCloth != this.clothesList.length - 1) {
       this.currentCloth++;
-      this.myslak.cloth = this.clothesList[this.currentCloth].id
     }
   }
 
   OnClickPreviousCloth() {
     if (this.currentCloth != 0) {
       this.currentCloth--;
-      this.myslak.cloth = this.clothesList[this.currentCloth].id
-
     }
   }
 
   OnClickSaveMyslak() {
-    this.myslak = new Myslak('name','description',
-      this.outlineColor.color,this.fillingColor.color, this.backgroundsList[this.currentBackground].id,
+    this.myslak = new Myslak('name', 'description',
+      this.outlineColor.color, this.fillingColor.color, this.backgroundsList[this.currentBackground].id,
       this.clothesList[this.currentCloth].id, this.headsList[this.currentHead].id)
     console.log(this.myslak)
     this.myslaksApi
