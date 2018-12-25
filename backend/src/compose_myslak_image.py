@@ -33,4 +33,3 @@ def compose_myslak_image(myslak, session):
         current_image = Image.open(url)
         result = Image.open(f'{IMG_PATH}/result.png')
         Image.alpha_composite(result, current_image).save(f'{IMG_PATH}/result.png')
-

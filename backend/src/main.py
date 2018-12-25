@@ -1,17 +1,15 @@
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
-from backend.src.get_changed_image_color_data import get_changed_image_color_data
+from backend.config import IMG_PATH
+from backend.src.get_changed_image_color_data import get_changed_image_color_base64
 from backend.src.compose_myslak_image import compose_myslak_image
 from .models.model import Session, engine, Base
 from .models.myslak import Myslak, MyslakSchema
 from .models.head import Head, HeadSchema
 from .models.background import Background, BackgroundSchema
 from .models.cloth import Cloth, ClothSchema
-
 from backend.utils.color import generate_random_color
-
-from backend.config import IMG_PATH
 
 app = Flask(__name__, static_url_path='')
 CORS(app)
@@ -81,22 +79,22 @@ def get_clothes():
 @app.route('/outline_color', methods=['POST'])
 def update_outline_color():
     new_color = request.get_json().get('color')
-    return jsonify(get_changed_image_color_data(new_color, './static/img/outline.png'))
+    return jsonify(get_changed_image_color_base64(new_color, './static/img/outline.png'))
 
 
 @app.route('/outline_color', methods=['GET'])
 def get_outline_color():
     new_color = generate_random_color()
-    return jsonify(get_changed_image_color_data(new_color, './static/img/outline.png'))
+    return jsonify(get_changed_image_color_base64(new_color, './static/img/outline.png'))
 
 
 @app.route('/filling_color', methods=['POST'])
 def update_filling_color():
     new_color = request.get_json().get('color')
-    return jsonify(get_changed_image_color_data(new_color, './static/img/filling.png'))
+    return jsonify(get_changed_image_color_base64(new_color, './static/img/filling.png'))
 
 
 @app.route('/filling_color', methods=['GET'])
 def get_filling_color():
     new_color = generate_random_color()
-    return jsonify(get_changed_image_color_data(new_color, './static/img/filling.png'))
+    return jsonify(get_changed_image_color_base64(new_color, './static/img/filling.png'))

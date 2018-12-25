@@ -1,12 +1,12 @@
-from base64 import b64encode
-
 import cv2 as cv
+
+from base64 import b64encode
 
 from backend.src.models.myslak_color import MyslakColor, MyslakColorSchema
 from backend.utils.color import replace_black_color
 
 
-def get_changed_image_color_data(new_color, image_url):
+def get_changed_image_color_base64(new_color, image_url):
     black_base = cv.imread(image_url, cv.IMREAD_UNCHANGED)
 
     new_image = replace_black_color(black_base, new_color)
