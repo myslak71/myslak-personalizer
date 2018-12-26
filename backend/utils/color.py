@@ -3,7 +3,7 @@ from random import randint
 
 import numpy as np
 
-from backend.src.errors import InvalidHexColorInput
+from backend.src.errors import InvalidHexColorArg, InvalidImageArg
 
 
 def generate_random_color():
@@ -15,7 +15,7 @@ def hex_to_gbr(hex_color):
     pattern = re.compile(r'^#?[0-9a-fA-F]{6}$')
 
     if not pattern.fullmatch(hex_color):
-        raise InvalidHexColorInput(hex_color)
+        raise InvalidHexColorArg(hex_color)
 
     hex_color = hex_color.lstrip('#')
 
@@ -31,5 +31,8 @@ def hex_to_gbr(hex_color):
 
 
 def replace_black_color(image, color):
+    if not isinstance(image, np.ndarray):
+        raise InvalidImageArg(image)
+
     image[np.where((image == [0, 0, 0, 255]).all(axis=2))] = hex_to_gbr(color)
     return image
