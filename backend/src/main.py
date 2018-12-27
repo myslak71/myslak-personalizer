@@ -2,8 +2,7 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 from backend.config import IMG_PATH
-from backend.src.get_changed_image_color_data import get_changed_image_color_base64
-from backend.src.compose_myslak_image import compose_myslak_image
+from backend.src.view_assist import compose_myslak_image, get_changed_image_color_base64
 from .models.model import Session, engine, Base
 from .models.myslak import Myslak, MyslakSchema
 from .models.head import Head, HeadSchema

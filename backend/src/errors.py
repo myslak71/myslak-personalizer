@@ -12,3 +12,11 @@ class InvalidImageArg(Exception):
 
     def __str__(self):
         return f'Incorrect image input. Expected type: numpy.ndarray. Given: {type(self.image)}'
+
+
+class CannotOpenImageFile(Exception):
+    def __init__(self, path):
+        self.path = path
+
+    def __str__(self):
+        return f'Cannot open image file at {self.path}. File does not exist or has inappropriate format.'
