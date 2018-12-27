@@ -18,7 +18,6 @@ os.path.dirname(HERE)
 
 def color_save_outline(myslak):
     black_outline = cv.imread(f'{IMG_PATH}/outline.png', cv.IMREAD_UNCHANGED)
-
     if black_outline is None:
         raise CannotOpenImageFile(f'{IMG_PATH}/outline.png')
 
@@ -36,21 +35,31 @@ def color_save_filling(myslak):
     cv.imwrite(f'{IMG_PATH}/new_filling_image.png', new_filling_image, [cv.IMWRITE_PNG_COMPRESSION, 9])
 
 
+def get_urls_from_db(myslak, session):
+    background = session.query(Background).get(myslak.background).image_url
+    cloth = session.query(Cloth).get(myslak.cloth).image_url
+    head = session.query(Head).get(myslak.head).image_url
+
+    return {
+        'background': background,
+        'cloth': cloth,
+        'head': head}
+
+
+
 def compose_myslak_image(myslak, session):
     color_save_outline(myslak)
 
     color_save_filling(myslak)
 
-    background = session.query(Background).get(myslak.background).image_url
-    cloth = session.query(Cloth).get(myslak.cloth).image_url
-    head = session.query(Head).get(myslak.head).image_url
+    images_names = get_urls_from_db(myslak, session)
 
     images_urls = (
-        f'{IMG_PATH}/{background}',
+        f'{IMG_PATH}/{images_names["background"]}',
         f'{IMG_PATH}/new_outline_image.png',
         f'{IMG_PATH}/new_filling_image.png',
-        f'{IMG_PATH}/{cloth}',
-        f'{IMG_PATH}/{head}'
+        f'{IMG_PATH}/{images_names["cloth"]}',
+        f'{IMG_PATH}/{images_names["head"]}',
     )
 
     for url in images_urls:
@@ -61,6 +70,9 @@ def compose_myslak_image(myslak, session):
 
 def get_changed_image_color_base64(new_color, image_url):
     black_base = cv.imread(image_url, cv.IMREAD_UNCHANGED)
+
+    if black_base is None:
+        raise CannotOpenImageFile(image_url)
 
     new_image = replace_black_color(black_base, new_color)
     buffer = cv.imencode('.png', new_image, [cv.IMWRITE_PNG_COMPRESSION, 9])[1]

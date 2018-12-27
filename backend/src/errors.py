@@ -20,3 +20,5 @@ class CannotOpenImageFile(Exception):
 
     def __str__(self):
         return f'Cannot open image file at {self.path}. File does not exist or has inappropriate format.'
+
+
