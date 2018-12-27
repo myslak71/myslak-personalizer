@@ -23,9 +23,7 @@ class TestViewsSupport(unittest.TestCase):
         with self.assertRaises(CannotOpenImageFile):
             color_save_outline(myslak)
 
-
     def test_get_changed_image_color_base64(self):
         with self.assertRaises(CannotOpenImageFile):
             get_changed_image_color_base64('#fffeee', 'invalid_url')
-
 
