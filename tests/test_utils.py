@@ -1,4 +1,4 @@
- import os
+import os
 import unittest
 
 import cv2 as cv
@@ -6,7 +6,7 @@ from ddt import ddt, data
 from mock import patch
 
 from backend.src.errors import InvalidHexColorArg, InvalidImageArg
-from ..utils.color import generate_random_color, hex_to_gbr, replace_black_color
+from backend.utils.color import generate_random_color, hex_to_gbr, replace_black_color
 
 HERE = os.path.abspath(__name__)
 
@@ -33,8 +33,8 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(generate_random_color(), '#fa43e1')
 
     def test_replace_black_color(self):
-        black_base = cv.imread(f'{os.path.dirname(HERE)}/backend/tests/fixtures/base.png', cv.IMREAD_UNCHANGED)
-        pattern_image = cv.imread(f'{os.path.dirname(HERE)}/backend/tests/fixtures/pattern.png', cv.IMREAD_UNCHANGED)
+        black_base = cv.imread(f'{os.path.dirname(HERE)}/tests/fixtures/base.png', cv.IMREAD_UNCHANGED)
+        pattern_image = cv.imread(f'{os.path.dirname(HERE)}/tests/fixtures/pattern.png', cv.IMREAD_UNCHANGED)
 
         self.assertEqual(replace_black_color(black_base, '#ff0000').all(), pattern_image.all())
 

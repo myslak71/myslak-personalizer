@@ -18,6 +18,7 @@ opencv-python = "*"
 jose = "*"
 python-jose = "*"
 pillow = "*"
+flaskr = "*"
 
 [requires]
 python_version = "3.7"

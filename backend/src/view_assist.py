@@ -1,6 +1,5 @@
 import os
 import cv2 as cv
-
 from PIL import Image
 from base64 import b64encode
 
@@ -44,7 +43,6 @@ def get_urls_from_db(myslak, session):
         'background': background,
         'cloth': cloth,
         'head': head}
-
 
 
 def compose_myslak_image(myslak, session):
