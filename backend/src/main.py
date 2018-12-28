@@ -2,8 +2,7 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 from backend.config import IMG_PATH
-from backend.src.get_changed_image_color_data import get_changed_image_color_base64
-from backend.src.compose_myslak_image import compose_myslak_image
+from backend.src.view_assist import compose_myslak_image, get_changed_image_color_base64
 from .models.model import Session, engine, Base
 from .models.myslak import Myslak, MyslakSchema
 from .models.head import Head, HeadSchema
@@ -26,18 +25,23 @@ def after_request(response):
 
 @app.route('/myslak', methods=['POST'])
 def download_myslak():
-    posted_myslak = MyslakSchema(only=('name', 'description',
-                                       'outline_color', 'filling_color',
-                                       'background', 'cloth', 'head')).load(request.get_json())
+    try:
+        posted_myslak = MyslakSchema(only=('name', 'description',
+                                           'outline_color', 'filling_color',
+                                           'background', 'cloth', 'head')).load(request.get_json())
 
-    myslak = Myslak(**posted_myslak.data)
+        myslak = Myslak(**posted_myslak.data)
 
-    session = Session()
+        session = Session()
 
-    compose_myslak_image(myslak, session)
+        compose_myslak_image(myslak, session)
 
-    session.close()
-    return send_from_directory(f'{IMG_PATH}/', 'result.png', as_attachment=True)
+        session.close()
+        return send_from_directory(f'{IMG_PATH}/', 'result.png', as_attachment=True)
+
+    except Exception as err:
+        print(err)
+        return ('', 400)
 
 
 @app.route('/heads', methods=['GET'])
@@ -78,23 +82,35 @@ def get_clothes():
 
 @app.route('/outline_color', methods=['POST'])
 def update_outline_color():
-    new_color = request.get_json().get('color')
-    return jsonify(get_changed_image_color_base64(new_color, './static/img/outline.png'))
+    try:
+        new_color = request.get_json().get('color')
+        return jsonify(get_changed_image_color_base64(new_color, './static/img/outline.png'))
+    except:
+        return ('', 400)
 
 
 @app.route('/outline_color', methods=['GET'])
 def get_outline_color():
-    new_color = generate_random_color()
-    return jsonify(get_changed_image_color_base64(new_color, './static/img/outline.png'))
+    try:
+        new_color = generate_random_color()
+        return jsonify(get_changed_image_color_base64(new_color, './static/img/outline.png'))
+    except:
+        return ('', 400)
 
 
 @app.route('/filling_color', methods=['POST'])
 def update_filling_color():
-    new_color = request.get_json().get('color')
-    return jsonify(get_changed_image_color_base64(new_color, './static/img/filling.png'))
+    try:
+        new_color = request.get_json().get('color')
+        return jsonify(get_changed_image_color_base64(new_color, './static/img/filling.png'))
+    except:
+        return ('', 400)
 
 
 @app.route('/filling_color', methods=['GET'])
 def get_filling_color():
-    new_color = generate_random_color()
-    return jsonify(get_changed_image_color_base64(new_color, './static/img/filling.png'))
+    try:
+        new_color = generate_random_color()
+        return jsonify(get_changed_image_color_base64(new_color, './static/img/filling.png'))
+    except:
+        return ('', 400)

@@ -4,6 +4,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+ddt = "*"
+mock = "*"
 
 [packages]
 flask = "*"
@@ -13,10 +15,10 @@ sqlalchemy = "*"
 psycopg2 = "*"
 numpy = "*"
 opencv-python = "*"
-pil = "*"
-pillow = "*"
 jose = "*"
 python-jose = "*"
+pillow = "*"
+flaskr = "*"
 
 [requires]
 python_version = "3.7"
