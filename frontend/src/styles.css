@@ -1,18 +1,76 @@
 /* You can add global styles to this file, and also import other style files */
-.row > div{
-        margin-bottom: 105px;
-    }
+.row > div {
+  margin-bottom: 105px;
+}
 
+
+.navbar-color {
+  background-color: #1d1d1f;
+}
+
+.row-color-width {
+  background-color: #3c3c3c;
+  width: 90%;
+}
+
+.form-color {
+  background-color: #323232;
+  color: white;
+}
 
 .myslak-form {
   margin-bottom: 10px;
+  background-color: #222222;
+  border: #7ca4e3 1px solid;
+  color: #7ca4e3;
+  border-radius: 10%;
+}
+
+.download-btn {
+  margin-bottom: 10px;
+  background-color: #222222;
+  border: yellow 1px solid;
+  color: yellow;
+  border-radius: 5%;
+  width: 100%;
 }
 
 .color-btn {
   margin-top: 10px;
+  background-color: #323232;
+  border: #323232;
+  padding: 0;
 }
+
 
 .content-top-margin {
   margin-top: 20px;
+  border: #1b1e20;
 }
 
+
+.content-left-margin {
+  margin-left: 0;
+}
+
+.flex-item {
+  flex: initial;
+}
+
+.select-row {
+  display: flex;
+  width: 100%;
+  align-content: center;
+  justify-content: space-around;
+}
+
+.flex-category-text{
+  flex: 0 0 initial;
+  /*flex-grow: 3;*/
+  text-align: center;
+  width: 100%;
+}
+
+.mobile-img {
+  width: 95%;
+}
