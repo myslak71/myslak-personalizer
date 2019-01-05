@@ -8,9 +8,6 @@ export class Myslak {
     public cloth: number,
     public head: number,
     public id?: number,
-    public updatedAt?: Date,
-    public createdAt?: Date,
-    public lastUpdatedBy?: string,
   ) {
   }
 }

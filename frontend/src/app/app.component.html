@@ -70,7 +70,7 @@
   </div>
 </div>
 
-<div class="d-sm-none">
+<div class="d-block d-lg-none">
   <div class="row justify-content-center">
     <div class="col-sm-12">
       <img class=" e2e-trusted-url mobile-img"
@@ -88,57 +88,57 @@
            style="position:absolute">
     </div>
   </div>
-    <div class="col-sm-12 form-color" style="margin-top: 100%">
-      <div>
-        <input class="myslak-form form-control color-btn content-form-margin-top" type="color"
-               [(ngModel)]="outlineColor.color" (change)="onClickOutlineColor()"
-               id="outlineColor" name="outlineColor">
-      </div>
-      <div>
-        <input class="myslak-form form-control color-btn" type="color" [(ngModel)]="fillingColor.color"
-               (change)="onClickFillingColor()"
-               id="fillingColor" name="fillingColor">
-      </div>
-      <div class="select-row">
-        <button class="myslak-form flex-item" (click)="OnClickPreviousBackground()">
-          prev
-        </button>
-        <div style="width: 90%; display: inline">
-          <div class="flex-category-text">
-            {{backgroundsList[currentBackground].name}}
-          </div>
+  <div class="col-sm-12 form-color" style="margin-top: 100%">
+    <div>
+      <input class="myslak-form form-control color-btn content-form-margin-top" type="color"
+             [(ngModel)]="outlineColor.color" (change)="onClickOutlineColor()"
+             id="outlineColor" name="outlineColor">
+    </div>
+    <div>
+      <input class="myslak-form form-control color-btn" type="color" [(ngModel)]="fillingColor.color"
+             (change)="onClickFillingColor()"
+             id="fillingColor" name="fillingColor">
+    </div>
+    <div class="select-row">
+      <button class="myslak-form flex-item" (click)="OnClickPreviousBackground()">
+        prev
+      </button>
+      <div style="width: 90%; display: inline">
+        <div class="flex-category-text">
+          {{backgroundsList[currentBackground].name}}
         </div>
-        <button class="myslak-form flex-item" (click)="OnClickNextBackground()">
-          next
-        </button>
       </div>
-      <div class="select-row">
-        <button class="myslak-form flex-item" (click)="OnClickPreviousHead()">
-          prev
-        </button>
-        <div style="width: 90%; display: inline">
-          <div class="flex-category-text">
-            {{headsList[currentHead].name}}
-          </div>
-        </div>
-        <button class="myslak-form flex-item" (click)="OnClickNextHead()" style="float: right">
-          next
-        </button>
-      </div>
-      <div class="select-row">
-        <button class="myslak-form flex-item" (click)="OnClickPreviousCloth()">
-          prev
-        </button>
-        <div style="width: 90%; display: inline">
-          <div class="flex-category-text">
-            {{clothesList[currentCloth].name}}
-          </div>
-        </div>
-        <button class="myslak-form flex-item" (click)="OnClickNextCloth()" style="float: right">next</button>
-      </div>
-      <button class="download-btn content-form-margin-bottom flex-item" (click)="OnClickSaveMyslak()">
-        Download
+      <button class="myslak-form flex-item" (click)="OnClickNextBackground()">
+        next
       </button>
     </div>
+    <div class="select-row">
+      <button class="myslak-form flex-item" (click)="OnClickPreviousHead()">
+        prev
+      </button>
+      <div style="width: 90%; display: inline">
+        <div class="flex-category-text">
+          {{headsList[currentHead].name}}
+        </div>
+      </div>
+      <button class="myslak-form flex-item" (click)="OnClickNextHead()" style="float: right">
+        next
+      </button>
+    </div>
+    <div class="select-row">
+      <button class="myslak-form flex-item" (click)="OnClickPreviousCloth()">
+        prev
+      </button>
+      <div style="width: 90%; display: inline">
+        <div class="flex-category-text">
+          {{clothesList[currentCloth].name}}
+        </div>
+      </div>
+      <button class="myslak-form flex-item" (click)="OnClickNextCloth()" style="float: right">next</button>
+    </div>
+    <button class="download-btn content-form-margin-bottom flex-item" (click)="OnClickSaveMyslak()">
+      Download
+    </button>
+  </div>
 
 </div>

@@ -1,19 +1,19 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
+import {saveAs as importedSaveAs} from 'file-saver';
+
 import {MyslaksApiService} from './myslaks/myslaks-api.service';
 import {Myslak} from './myslaks/myslak.model';
-import {HeadsApiService} from "./myslaks/heads-api.service";
-import {Head} from "./myslaks/head.model";
-import {BackgroundsApiService} from "./myslaks/backgrounds-api.service";
-import {Background} from "./myslaks/background.model";
-import {Cloth} from "./myslaks/cloth.model";
-import {ClothesApiService} from "./myslaks/clothes-api.service";
-import {OutlineColor} from "./myslaks/outlineColor.model";
-import {OutlineColorApiService} from "./myslaks/outlineColor-api.service";
-import {FillingColor} from "./myslaks/fillingColor.model";
-import {FillingColorApiService} from "./myslaks/fillingColor-api.service";
-
-import {saveAs as importedSaveAs} from "file-saver";
+import {HeadsApiService} from './myslaks/heads-api.service';
+import {Head} from './myslaks/head.model';
+import {BackgroundsApiService} from './myslaks/backgrounds-api.service';
+import {Background} from './myslaks/background.model';
+import {Cloth} from './myslaks/cloth.model';
+import {ClothesApiService} from './myslaks/clothes-api.service';
+import {OutlineColor} from './myslaks/outlineColor.model';
+import {OutlineColorApiService} from './myslaks/outlineColor-api.service';
+import {FillingColor} from './myslaks/fillingColor.model';
+import {FillingColorApiService} from './myslaks/fillingColor-api.service';
 
 
 @Component({
@@ -22,8 +22,6 @@ import {saveAs as importedSaveAs} from "file-saver";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'Create your own Myslak!';
-
   fillingColorSubs: Subscription;
   fillingColor: FillingColor;
 
@@ -63,8 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .getHeads()
       .subscribe(res => {
           this.headsList = res;
-          this.currentHead = Math.floor(Math.random() * (this.headsList.length))
-          console.log(this.currentHead)
+          this.currentHead = Math.floor(Math.random() * (this.headsList.length));
         },
         console.error
       );
@@ -73,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .getBackgrounds()
       .subscribe(res => {
           this.backgroundsList = res;
-          this.currentBackground = Math.floor(Math.random() * (this.headsList.length))
+          this.currentBackground = Math.floor(Math.random() * (this.headsList.length));
         },
         console.error
       );
@@ -82,7 +79,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .getClothes()
       .subscribe(res => {
           this.clothesList = res;
-          this.currentCloth = Math.floor(Math.random() * (this.headsList.length))
+          this.currentCloth = Math.floor(Math.random() * (this.headsList.length));
         },
         console.error
       );
@@ -90,19 +87,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.outlineColorSubs = this.outlineColorApi
       .getOutlineColor()
       .subscribe(res => {
-          console.log(res.color)
-          this.outlineColor = res
+          this.outlineColor = res;
         },
-        console.error)
+        console.error);
 
     this.fillingColorSubs = this.fillingColorApi
       .getFillingColor()
       .subscribe(res => {
-          console.log(res.color)
-          this.fillingColor = res
+          this.fillingColor = res;
 
         },
-        console.error)
+        console.error);
 
   };
 
@@ -121,8 +116,8 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.outlineColor = res;
       }, err => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
   onClickFillingColor() {
@@ -138,7 +133,6 @@ export class AppComponent implements OnInit, OnDestroy {
   OnClickNextBackground() {
     if (this.currentBackground != this.backgroundsList.length - 1) {
       this.currentBackground++;
-      console.log('aseiemase', this.currentHead)
     }
   }
 
