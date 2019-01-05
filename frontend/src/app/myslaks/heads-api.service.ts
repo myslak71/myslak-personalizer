@@ -3,7 +3,6 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import {API_URL} from '../env';
-import {Head} from './head.model';
 
 @Injectable()
 export class HeadsApiService {
@@ -16,8 +15,6 @@ export class HeadsApiService {
   }
 
 
-
-// GET list of public, future events
   getHeads(): Observable<any> {
     return this.http
       .get(`${API_URL}/heads`)

@@ -20,12 +20,11 @@ export class OutlineColorApiService {
   }
 
 
-
-  updateOutlineColor(outlineColor) : Observable<any>{
+  updateOutlineColor(outlineColor): Observable<any> {
     return this.http.post(`${API_URL}/outline_color`, outlineColor, httpOptions)
   }
 
-   getOutlineColor(): Observable<any> {
+  getOutlineColor(): Observable<any> {
     return this.http.get(`${API_URL}/outline_color`).catch(OutlineColorApiService._handleError);
   }
 
