@@ -1,0 +1,7 @@
+image: python:3.7
+test:
+  before_script:
+    - pip install pipenv
+  script:
+    - pipenv run python -m pytest --cov=backend tests/
+
