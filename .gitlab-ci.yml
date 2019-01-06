@@ -1,8 +1,11 @@
 image: python:3.7
+build:
+
 test:
   before_script:
     - pip install pipenv
     - pipenv install --dev
   script:
     - pipenv run python -m pytest --cov=backend tests/
+
 
