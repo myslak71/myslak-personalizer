@@ -1,4 +1,6 @@
 ### Installation
+[![pipeline status](https://gitlab.com/myslak/wonderful_myslak_world/badges/master/pipeline.svg)](https://gitlab.com/myslak/wonderful_myslak_world/commits/yml)
+[![coverage report](https://gitlab.com/myslak/wonderful_myslak_world/badges/master/coverage.svg)](https://gitlab.com/myslak/wonderful_myslak_world/commits/yml)
 1. postgres
 2. node.js
     ```
