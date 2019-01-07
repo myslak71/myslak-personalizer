@@ -66,11 +66,11 @@
 
 .flex-category-text{
   flex: 0 0 initial;
-  /*flex-grow: 3;*/
   text-align: center;
   width: 100%;
 }
 
 .mobile-img {
-  width: 95%;
+  width: 92%;
+  margin-bottom: 0;
 }
