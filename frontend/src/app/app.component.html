@@ -74,8 +74,7 @@
   <div class="row justify-content-center">
     <div class="col-sm-12">
       <img class=" e2e-trusted-url mobile-img"
-           src="data:image/png;base64,{{backgroundsList[currentBackground].image_url}}"
-           style="position: absolute">
+           src="data:image/png;base64,{{backgroundsList[currentBackground].image_url}}" style="position:absolute; ">
       <img class=" e2e-trusted-url mobile-img" src="data:image/png;base64,{{outlineColor.image_url}}"
            style="position:absolute">
       <img class=" e2e-trusted-url mobile-img" src="data:image/png;base64,{{fillingColor.image_url}}"
@@ -88,7 +87,7 @@
            style="position:absolute">
     </div>
   </div>
-  <div class="col-sm-12 form-color" style="margin-top: 100%">
+  <div class="col-sm-12 form-color" style="margin-top: 95%">
     <div>
       <input class="myslak-form form-control color-btn content-form-margin-top" type="color"
              [(ngModel)]="outlineColor.color" (change)="onClickOutlineColor()"
