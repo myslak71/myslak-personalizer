@@ -18,7 +18,6 @@ sqlalchemy = "*"
 psycopg2 = "*"
 numpy = "*"
 opencv-python = "*"
-python-jose = "*"
 pillow = "*"
 
 [requires]
