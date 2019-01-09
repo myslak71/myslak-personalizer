@@ -23,6 +23,7 @@
     "@types/file-saver": "^2.0.0",
     "auth0-web": "^1.7.0",
     "core-js": "^2.5.4",
+    "express": "^4.16.4",
     "file-saver": "^2.0.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
