@@ -13,8 +13,6 @@ from backend.utils.color import generate_random_color
 app = Flask(__name__, static_url_path='')
 CORS(app)
 
-# Base.metadata.create_all(engine)
-
 
 @app.after_request
 def after_request(response):
