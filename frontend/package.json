@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
@@ -24,7 +25,8 @@
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "typescript": "~3.1.6"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.11.2",
@@ -46,5 +48,9 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.1.6"
+  },
+  "engines": {
+    "node": "6.11.0",
+    "npm": "3.10.10"
   }
 }

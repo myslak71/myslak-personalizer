@@ -8,10 +8,13 @@
     sudo apt-get install -y nodejs
     sudo npm install -g @angular/cli
 
-    npm install rxjs@6 rxjs-compat@6 --save
+    sudo npm install rxjs@6 rxjs-compat@6 --save
     
-    npm install file-saver --save
-    npm install @types/file-saver --save
+    sudo npm install file-saver --save
+    sudo npm install @types/file-saver --save
+    
+    sudo npm install enhanced-resolve@3.3.0 --save-dev
+    sudo npm install express path --save
     ```
 
 
