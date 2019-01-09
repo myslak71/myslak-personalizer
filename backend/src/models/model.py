@@ -5,7 +5,7 @@ from base64 import b64encode
 
 from backend.config import IMG_PATH, DB_NAME, DB_PASSWORD, DB_URL, DB_USER
 
-engine = create_engine(f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_URL}/{DB_NAME}')
+engine = create_engine(f'postgresql://@{DB_URL}')
 Session = sessionmaker(bind=engine)
 
 Base = declarative_base()
