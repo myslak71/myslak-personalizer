@@ -1,0 +1,56 @@
+CREATE TABLE public.backgrounds (
+    id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    last_updated_by character varying,
+    name character varying,
+    image_url character varying
+);
+
+CREATE TABLE public.clothes (
+    id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    last_updated_by character varying,
+    name character varying,
+    image_url character varying
+);
+
+CREATE TABLE public.heads (
+    id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    last_updated_by character varying,
+    name character varying,
+    image_url character varying
+);
+
+
+INSERT INTO public.backgrounds (id, name, image_url) VALUES (1, 'mountains', 'background/mountains.png');
+INSERT INTO public.backgrounds (id, name, image_url) VALUES (2, 'sea', 'background/sea.png');
+INSERT INTO public.backgrounds (id, name, image_url) VALUES (3, 'space', 'background/space.png');
+INSERT INTO public.backgrounds (id, name, image_url) VALUES (4, 'castle', 'background/castle.png');
+
+INSERT INTO public.clothes (id, name, image_url) VALUES (1, 'indian', 'cloth/indian.png');
+INSERT INTO public.clothes (id, name, image_url) VALUES (2, 'pirate', 'cloth/pirate.png');
+INSERT INTO public.clothes (id, name, image_url) VALUES (3, 'armour', 'cloth/armour.png');
+INSERT INTO public.clothes (id, name, image_url) VALUES (4,  'space suit', 'cloth/space.png');
+
+INSERT INTO public.heads (id, name, image_url) VALUES (3, 'space helmet', 'head/space.png');
+INSERT INTO public.heads (id, name, image_url) VALUES (4, 'knight helmet', 'head/knight.png');
+INSERT INTO public.heads (id, name, image_url) VALUES (2, 'pirate eye-patch', 'head/pirate.png');
+INSERT INTO public.heads (id, name, image_url) VALUES (1, 'indian feather', 'head/indian.png');
+
+
+ALTER TABLE ONLY public.backgrounds
+    ADD CONSTRAINT backgrounds_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.clothes
+    ADD CONSTRAINT clothes_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.filling_color
+    ADD CONSTRAINT filling_color_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.heads
+    ADD CONSTRAINT heads_pkey PRIMARY KEY (id);
+
