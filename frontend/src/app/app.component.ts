@@ -133,12 +133,16 @@ export class AppComponent implements OnInit, OnDestroy {
   OnClickNextBackground() {
     if (this.currentBackground != this.backgroundsList.length - 1) {
       this.currentBackground++;
+    } else {
+      this.currentBackground = 0
     }
   }
 
   OnClickPreviousBackground() {
     if (this.currentBackground != 0) {
       this.currentBackground--
+    } else {
+      this.currentBackground = this.backgroundsList.length - 1
     }
   }
 
@@ -146,26 +150,35 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.currentHead != this.headsList.length - 1) {
       this.currentHead++;
 
+    } else {
+      this.currentHead = 0
     }
   }
 
   OnClickPreviousHead() {
     if (this.currentHead != 0) {
       this.currentHead--;
+    } else {
+      this.currentHead = this.headsList.length - 1
     }
   }
 
   OnClickNextCloth() {
     if (this.currentCloth != this.clothesList.length - 1) {
       this.currentCloth++;
+    } else {
+      this.currentCloth = 0
     }
   }
 
   OnClickPreviousCloth() {
     if (this.currentCloth != 0) {
       this.currentCloth--;
+    } else {
+      this.currentCloth = this.clothesList.length - 1
     }
   }
+
 
   OnClickSaveMyslak() {
     this.myslak = new Myslak('name', 'description',
