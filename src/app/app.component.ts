@@ -133,6 +133,8 @@ export class AppComponent implements OnInit, OnDestroy {
   OnClickNextBackground() {
     if (this.currentBackground != this.backgroundsList.length - 1) {
       this.currentBackground++;
+    } else {
+      this.currentBackground = 0
     }
   }
 
@@ -146,6 +148,8 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.currentHead != this.headsList.length - 1) {
       this.currentHead++;
 
+    } else {
+      this.currentHead = 0
     }
   }
 
@@ -158,6 +162,8 @@ export class AppComponent implements OnInit, OnDestroy {
   OnClickNextCloth() {
     if (this.currentCloth != this.clothesList.length - 1) {
       this.currentCloth++;
+    } else {
+      this.currentCloth = 0
     }
   }
 
