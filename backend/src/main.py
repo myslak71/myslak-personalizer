@@ -84,7 +84,7 @@ def get_clothes():
 def update_outline_color():
     try:
         new_color = request.get_json().get('color')
-        return jsonify(get_changed_image_color_base64(new_color, './static/img/outline.png'))
+        return jsonify(get_changed_image_color_base64(new_color, f'{IMG_PATH}/outline.png'))
     except:
         return ('', 400)
 
@@ -93,7 +93,7 @@ def update_outline_color():
 def get_outline_color():
     try:
         new_color = generate_random_color()
-        return jsonify(get_changed_image_color_base64(new_color, './static/img/outline.png'))
+        return jsonify(get_changed_image_color_base64(new_color, f'{IMG_PATH}/outline.png'))
     except:
         return ('', 400)
 
@@ -102,7 +102,7 @@ def get_outline_color():
 def update_filling_color():
     try:
         new_color = request.get_json().get('color')
-        return jsonify(get_changed_image_color_base64(new_color, './static/img/filling.png'))
+        return jsonify(get_changed_image_color_base64(new_color, f'{IMG_PATH}/filling.png'))
     except:
         return ('', 400)
 
@@ -111,6 +111,6 @@ def update_filling_color():
 def get_filling_color():
     try:
         new_color = generate_random_color()
-        return jsonify(get_changed_image_color_base64(new_color, './static/img/filling.png'))
+        return jsonify(get_changed_image_color_base64(new_color, f'{IMG_PATH}/filling.png'))
     except:
         return ('', 400)
