@@ -1,6 +1,8 @@
 
 [![pipeline status](https://gitlab.com/myslak/wonderful_myslak_world/badges/master/pipeline.svg)](https://gitlab.com/myslak/wonderful_myslak_world/commits/yml)
 [![coverage report](https://gitlab.com/myslak/wonderful_myslak_world/badges/master/coverage.svg)](https://gitlab.com/myslak/wonderful_myslak_world/commits/yml)
+![](presentation.gif)
+
 ### Installation
 ___
 1. PostgreSQL
