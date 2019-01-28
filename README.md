@@ -25,7 +25,7 @@ ___
     pipenv install
     ```
     
-4. Configuration
+### Configuration
 ___
 In config.py file change DB parameters to meet your PostgreSQL requirements.
 
